@@ -1,4 +1,5 @@
 function placeFighter(index) {
+	if (index < sith.name.length) {
 var imageVillainContainer = $("<div>");
     imageVillainContainer.addClass("col");
 	$("#sith").append(imageVillainContainer);
@@ -9,7 +10,8 @@ var imageVillainContainer = $("<div>");
     imageVillain.attr("src", sith.imagePath[index]);
 	imageVillain.attr("attack-value", sith.attack[index]);
 	imageVillain.attr("alt", sith.name[index]);
-    $("#sith").append(imageVillain);  
+    $("#sith").append(imageVillain);
+	}	
 
 }
 
@@ -77,10 +79,10 @@ var imageHeroContainer = $("<div>");
 
 var imageHero = $("<img>");
     imageHero.addClass("jedi-image");
-	imageHero.attr('id', jedi.name[turnCounter-1]);
-    imageHero.attr("src", jedi.imagePath[turnCounter-1]);
-	imageHero.attr("attack-value", jedi.attack[turnCounter-1]);
-	imageHero.attr("alt", jedi.name[turnCounter-1]);
+	imageHero.attr('id', jedi.name[turnCounter]);
+    imageHero.attr("src", jedi.imagePath[turnCounter]);
+	imageHero.attr("attack-value", jedi.attack[turnCounter]);
+	imageHero.attr("alt", jedi.name[turnCounter]);
     $("#jedi").append(imageHero); 
 	
 $(".jedi-image").on("click", function() {
