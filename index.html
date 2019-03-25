@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!--  <meta http-equiv="X-UA-Compatible" content="ie=edge">  //what is this ? -->
-    <title>Final Star Wars Fantasy</title>
+    <title>Final Star Wars Fantasy: the Gathering</title>
 	
 	<link rel="stylesheet" href="./assets/css/reset.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -14,17 +14,26 @@
 
 <body>
 
-  <h1>Pick a Jedi<span id="number-to-guess"></span></h1>
+  <div class="jumbotron"><h1>Final Star Wars Fantasy: the Gathering</h1></div>
 
   <!-- Note that this div is now empty. We will fill it dynamically -->
-  <div id="sith">
-  </div>
-  
-  <div id="jedi">
-  </div>
+	
+	<div class="container">
+		<div class="row">Opposing fighters</div>
+	</div>
+	
+	<div class="container">
+		<div class="row" id="sith"></div>
+	</div>
 
-  <!-- JAVASCRIPT  -->
-  <!-- ========================================= -->
+	<div class="container">
+		<div class="row">Your fighters</div>
+	</div>
+	
+	<div class="container">
+		<div class="row" id="jedi"></div>
+	</div>
+	
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/javascript/game.js"></script>
 </body>

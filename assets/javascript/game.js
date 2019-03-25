@@ -11,10 +11,14 @@ var sith = {
 	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/DarthSidious.jpeg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
 	attack	: [1,2,3,4,5]
 };
-
+ 
 for (var i = 0; i < 5; i++) {
 
-    var imageHero = $("<img>");
+    var imageHeroContainer = $("<div>");
+    imageHeroContainer.addClass("col");
+	$("#jedi").append(imageHeroContainer);
+	
+	var imageHero = $("<img>");
     imageHero.addClass("jedi-image");
 	imageHero.attr('id', jedi.name[i]);
     imageHero.attr("src", jedi.imagePath[i]);
@@ -23,6 +27,10 @@ for (var i = 0; i < 5; i++) {
     $("#jedi").append(imageHero);
 }
 for (var i = 0; i < 5; i++) {
+	
+	var imageVillainContainer = $("<div>");
+    imageVillainContainer.addClass("col");
+	$("#sith").append(imageVillainContainer);
 
     var imageVillain = $("<img>");
     imageVillain.addClass("sith-image");
@@ -33,6 +41,11 @@ for (var i = 0; i < 5; i++) {
     $("#sith").append(imageVillain);
 }
 
+
+gameOver = false;
+
+
+
 $(".jedi-image").on("click", function() {
 
 var fighter = {
@@ -42,7 +55,7 @@ var fighter = {
 
 console.log ("You have chosen " + fighter.name);
 console.log (fighter.name + " does " + fighter.attack + " damage.") ;
-   
+});
    
 $(".sith-image").on("click", function() {
 var fighter = {
@@ -52,5 +65,5 @@ var fighter = {
 
 console.log ("You are fighting " + fighter.name);
 console.log (fighter.name + " does " + fighter.attack + " damage.") ;
-})
+
 });
