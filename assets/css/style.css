@@ -17,3 +17,13 @@ body {
 	width: 150px;
 	height: 150px;
 }
+#next-turn {
+	text-align:center;
+	border: 3px;
+	border-color: white;
+	border-style: solid;
+	background-color: orange;
+	margin-top: 1em;
+	color: white;
+	font-weight: bold;
+}

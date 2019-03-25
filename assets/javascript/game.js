@@ -41,8 +41,7 @@ for (var i = 0; i < 5; i++) {
     $("#sith").append(imageVillain);
 }
 
-
-gameOver = false;
+// gameOver = false;
 
 
 
