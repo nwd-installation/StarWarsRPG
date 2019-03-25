@@ -1,9 +1,9 @@
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) {
-var imageContainer = $("<div>");
+/* var imageContainer = $("<div>");
     imageContainer.addClass("col");
 	$("#"+lightSideDarkSide).append(imageContainer);
-
+*/ 
  var imageFighter = $("<img>");
     imageFighter.addClass(lightSideDarkSide + "-image");
 	imageFighter.attr('id', sith.name[index]);
@@ -11,6 +11,7 @@ var imageContainer = $("<div>");
 	imageFighter.attr("attack-value", sith.attack[index]);
 	imageFighter.attr("alt", sith.name[index]);
     $("#"+lightSideDarkSide).append(imageFighter);
+	
 	}	
 
 }
@@ -18,10 +19,11 @@ var imageContainer = $("<div>");
 function placeJedi(index, lightSideDarkSide) {
 
 if (index < jedi.name.length) {
+/*
 var imageContainer = $("<div>");
     imageContainer.addClass("col");
 	$("#"+lightSideDarkSide).append(imageContainer);
-
+*/
  var imageFighter = $("<img>");
     imageFighter.addClass(lightSideDarkSide + "-image");
 	imageFighter.attr('id', jedi.name[index]);
