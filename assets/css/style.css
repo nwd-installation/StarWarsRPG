@@ -1,4 +1,13 @@
-.crystal-image {
-	width: 300px;
+body {
+	background-color: #ffffff;
+}
+
+.jedi-image {
 	height: 300px;
+	width: 300px;
+}
+
+.sith-image {
+	height: 300px;
+	width: 300px;
 }

@@ -1,50 +1,56 @@
-var imageHero = [];
-var heroes = ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Yoda", "Mace Windu", "Anakin Skywalker", 
-var imageVillain = [];
-var villains = ["Emperor Palpatine", "Darth Maul", "Darth Sidious", "Darth Vader", "Darth Plagueis"] 
 
-for (var i = 0; i < heroes.length; i++) {
+var jedi = {
+	
+	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Yoda", "Mace Windu", "Anakin Skywalker"],
+	imagePath	: ["./assets/images/ObiWanKenobi.png","./assets/images/QuiGonJinn.jpg","./assets/images/yoda.jpg","./assets/images/MaceWindu.png","./assets/images/anakin.jpg"],
+	attack	: [1,2,3,4,5]
+};
+	
+var sith = {
+	name	: ["Darth Maul", "Darth Plagueis", "Darth Sidious", "Darth Vader", "Emperor Palpatine"],
+	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/DarthSidious.jpeg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
+	attack	: [1,2,3,4,5]
+};
 
-    imageHero[i] = $("<img>");
-    imageHero.addClass("hero-image");
-    imageHero.attr("src", "./assets/images/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
-    imageHero.attr("hero-attackvalue", 1);
-    $("#Heros").append(imageHero);
+for (var i = 0; i < 5; i++) {
+
+    var imageHero = $("<img>");
+    imageHero.addClass("jedi-image");
+	imageHero.attr('id', jedi.name[i]);
+    imageHero.attr("src", jedi.imagePath[i]);
+	imageHero.attr("attack-value", jedi.attack[i]);
+	imageHero.attr("alt", jedi.name[i]);
+    $("#jedi").append(imageHero);
+}
+for (var i = 0; i < 5; i++) {
+
+    var imageVillain = $("<img>");
+    imageVillain.addClass("sith-image");
+	imageVillain.attr('id', sith.name[i]);
+    imageVillain.attr("src", sith.imagePath[i]);
+	imageVillain.attr("attack-value", sith.attack[i]);
+	imageVillain.attr("alt", sith.name[i]);
+    $("#sith").append(imageVillain);
 }
 
+$(".jedi-image").on("click", function() {
 
-for (var i = 0; i < villains.length; i++) {
+var fighter = {
+	name	:	$(this).attr("alt"),
+	attack	:	$(this).attr("attack-value")
+};
 
-    imageVillain[i] = $("<img>");
-    imageVillain.addClass("villain-image");
-    imageVillain.attr("src", "./assets/images/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
-	imageVillain.attr("villain-attackvalue", 1);
-    $("#Villains").append(imageVillain);
-}
+console.log ("You have chosen " + fighter.name);
+console.log (fighter.name + " does " + fighter.attack + " damage.") ;
+   
+   
+$(".sith-image").on("click", function() {
+var fighter = {
+	name	:	$(this).attr("alt"),
+	attack	:	$(this).attr("attack-value")
+};
 
-$(".hero-image").on("click", function() {
-
-    // Determining the crystal's value requires us to extract the value from the data attribute.
-    // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
-    // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
-    // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
-
-    var heroAttackValue = ($(this).attr("hero-attackvalue"));
-   crystalValue = parseInt(crystalValue);
-
-    // We then add the crystalValue to the user's "counter" which is a global variable.
-    // Every click, from every crystal adds to the global counter.
-    counter += crystalValue;
-
-    // All of the same game win-lose logic applies. So the rest remains unchanged.
-    alert("New score: " + counter);
-
-    if (counter === targetNumber) {
-      alert("You win!");
-    }
-
-    else if (counter >= targetNumber) {
-      alert("You lose!!");
-    }
-
+console.log ("You are fighting " + fighter.name);
+console.log (fighter.name + " does " + fighter.attack + " damage.") ;
+})
 });
