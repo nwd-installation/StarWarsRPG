@@ -27,3 +27,7 @@ body {
 	color: white;
 	font-weight: bold;
 }
+
+#next-turn-column {
+	padding-right:0px;
+}

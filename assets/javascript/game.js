@@ -1,14 +1,14 @@
 
 var jedi = {
 	
-	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Yoda", "Mace Windu", "Anakin Skywalker"],
-	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/yoda.jpg","./assets/images/MaceWindu.jpg","./assets/images/anakin.jpg"],
+	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
+	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/MaceWindu.jpg","./assets/images/Yoda.jpg","./assets/images/Anakin.jpg"],
 	attack	: [1,2,3,4,5]
 };
 	
 var sith = {
 	name	: ["Darth Maul", "Darth Plagueis", "Chancellor Palpatine", "Darth Vader", "Darth Sidious"],
-	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/DarthSidious.jpeg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
+	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/Palpatine.jpg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
 	attack	: [1,2,3,4,5]
 };
  
@@ -41,7 +41,10 @@ for (var i = 0; i < 5; i++) {
     $("#sith").append(imageVillain);
 }
 
-// gameOver = false;
+gameOver = false;
+turnCounter = 0;
+
+// while (!gameOver) {
 
 
 
@@ -66,3 +69,9 @@ console.log ("You are fighting " + fighter.name);
 console.log (fighter.name + " does " + fighter.attack + " damage.") ;
 
 });
+
+$("#next-turn").on("click", function() {
+console.log ("Next Turn Clicked");
+});
+
+//}
