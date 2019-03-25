@@ -2,12 +2,12 @@
 var jedi = {
 	
 	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Yoda", "Mace Windu", "Anakin Skywalker"],
-	imagePath	: ["./assets/images/ObiWanKenobi.png","./assets/images/QuiGonJinn.jpg","./assets/images/yoda.jpg","./assets/images/MaceWindu.png","./assets/images/anakin.jpg"],
+	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/yoda.jpg","./assets/images/MaceWindu.jpg","./assets/images/anakin.jpg"],
 	attack	: [1,2,3,4,5]
 };
 	
 var sith = {
-	name	: ["Darth Maul", "Darth Plagueis", "Darth Sidious", "Darth Vader", "Emperor Palpatine"],
+	name	: ["Darth Maul", "Darth Plagueis", "Chancellor Palpatine", "Darth Vader", "Darth Sidious"],
 	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/DarthSidious.jpeg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
 	attack	: [1,2,3,4,5]
 };
