@@ -31,3 +31,7 @@ body {
 #next-turn-column {
 	padding-right:0px;
 }
+
+.jumbotron {
+	text-align: center;
+}

@@ -1,3 +1,18 @@
+function placeFighter(index) {
+var imageVillainContainer = $("<div>");
+    imageVillainContainer.addClass("col");
+	$("#sith").append(imageVillainContainer);
+
+ var imageVillain = $("<img>");
+    imageVillain.addClass("sith-image");
+	imageVillain.attr('id', sith.name[index]);
+    imageVillain.attr("src", sith.imagePath[index]);
+	imageVillain.attr("attack-value", sith.attack[index]);
+	imageVillain.attr("alt", sith.name[index]);
+    $("#sith").append(imageVillain);  
+
+}
+
 
 var jedi = {
 	
@@ -12,20 +27,20 @@ var sith = {
 	attack	: [1,2,3,4,5]
 };
  
-for (var i = 0; i < 5; i++) {
-
+// for (var i = 0; i < 5; i++) {
+/*
     var imageHeroContainer = $("<div>");
     imageHeroContainer.addClass("col");
 	$("#jedi").append(imageHeroContainer);
-	
+	/*
 	var imageHero = $("<img>");
     imageHero.addClass("jedi-image");
 	imageHero.attr('id', jedi.name[i]);
     imageHero.attr("src", jedi.imagePath[i]);
 	imageHero.attr("attack-value", jedi.attack[i]);
 	imageHero.attr("alt", jedi.name[i]);
-    $("#jedi").append(imageHero);
-}
+    $("#jedi").append(imageHero); */
+/* }
 for (var i = 0; i < 5; i++) {
 	
 	var imageVillainContainer = $("<div>");
@@ -38,27 +53,52 @@ for (var i = 0; i < 5; i++) {
     imageVillain.attr("src", sith.imagePath[i]);
 	imageVillain.attr("attack-value", sith.attack[i]);
 	imageVillain.attr("alt", sith.name[i]);
-    $("#sith").append(imageVillain);
-}
+    $("#sith").append(imageVillain); 
+} */
 
-gameOver = false;
-turnCounter = 0;
-
-// while (!gameOver) {
-
+var gameOver = false;
+var turnCounter = 0;
+var nextTurn = true;
 
 
+$("#next-turn").on("click", function() {
+console.log ("Next Turn Clicked"); turnCounter++; console.log(turnCounter); placeFighter(turnCounter-1);
+});
+
+
+
+while (!gameOver && nextTurn) {
+// turnCounter++; console.log(turnCounter);
+nextTurn = false;
+
+var imageHeroContainer = $("<div>");
+    imageHeroContainer.addClass("col");
+	$("#jedi").append(imageHeroContainer);
+
+var imageHero = $("<img>");
+    imageHero.addClass("jedi-image");
+	imageHero.attr('id', jedi.name[turnCounter-1]);
+    imageHero.attr("src", jedi.imagePath[turnCounter-1]);
+	imageHero.attr("attack-value", jedi.attack[turnCounter-1]);
+	imageHero.attr("alt", jedi.name[turnCounter-1]);
+    $("#jedi").append(imageHero); 
+	
 $(".jedi-image").on("click", function() {
 
 var fighter = {
 	name	:	$(this).attr("alt"),
 	attack	:	$(this).attr("attack-value")
 };
-
 console.log ("You have chosen " + fighter.name);
-console.log (fighter.name + " does " + fighter.attack + " damage.") ;
+console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
 });
-   
+
+
+	
+	//pause for input
+	//prompt for attack
+
+/*   
 $(".sith-image").on("click", function() {
 var fighter = {
 	name	:	$(this).attr("alt"),
@@ -68,10 +108,8 @@ var fighter = {
 console.log ("You are fighting " + fighter.name);
 console.log (fighter.name + " does " + fighter.attack + " damage.") ;
 
-});
+}); */ 
 
-$("#next-turn").on("click", function() {
-console.log ("Next Turn Clicked");
-});
 
-//}
+
+}
