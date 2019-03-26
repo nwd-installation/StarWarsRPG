@@ -71,7 +71,12 @@ placeJedi(turnCounter, "jedi");
 
 
 
-function nextTurn() {
+function nextTurn() { // add argument parameter: side, to be used in the various functions for each phase
+
+//untapPhase(side)
+//upkeepPhase(side)  // note, is this needed?
+//attackphasePhase(side)
+	
 	for (i = 0; i < jedi.name.length; i++) {
 	var targetDiv = document.getElementById(jedi.name[i]);
 	if (targetDiv) targetDiv.classList.remove("selected-fighter");  }
