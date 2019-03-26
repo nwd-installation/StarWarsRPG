@@ -143,26 +143,26 @@ document.addEventListener('click', clickListener);
 
 function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
-	var clickedValue = event.target.attributes;
-	// console.log(clickedValue[0]);
-	if (clickedValue[0]) {
-		if (clickedValue[0].value === "next-turn") { nextTurn(); }
-		else if (clickedValue[0].value === "attack-button" && abilityButtonClicked === false) {
+	var clickedValue = event.target;
+	// console.log(clickedValue.attributes[0]);
+	if (clickedValue.attributes[0]) {
+		if (clickedValue.attributes[0].value === "next-turn") { nextTurn(); }
+		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; console.log("Select fighter(s) to attack opponent with"); //inactive-button
 			}
 			else { attackButtonClicked = false; }
 			console.log(attackButtonClicked);
 		}																					
-		else if (clickedValue[0].value === "ability-button" && attackButtonClicked === false) {
+		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
 			if(!abilityButtonClicked) { abilityButtonClicked = true; console.log("Select fighter to use ability"); }
 			else abilityButtonClicked = false;
 			console.log(abilityButtonClicked);
 		}	
-		else if (clickedValue[0].value === "jedi-image" && attackButtonClicked === true) {	
+		else if (clickedValue.attributes[0].value === "jedi-image" && attackButtonClicked === true) {	
 		var fighter = {
-			name	:	clickedValue[1].value,
-			attack	:	clickedValue[3].value
+			name	:	clickedValue.attributes[1].value,
+			attack	:	clickedValue.attributes[3].value
 		};
 		
 		if (turnCounter >= fighter.attack && jedi.hp[fighter.attack] > 0 && !jedi.attackedThisTurn[fighter.attack]) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
