@@ -12,6 +12,7 @@ var playerLife = 20;
 
 
 var attackButtonClicked = false;
+var abilityButtonClicked = false;
 
 
 function placeFighter(index, lightSideDarkSide) {
@@ -126,13 +127,22 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 document.addEventListener('click', clickListener);
 
 function clickListener(event) {
-if (gameOver) {document.removeEventListener('click', clickListener); return; }
+	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target.attributes;
 	// console.log(clickedValue[0]);
-	if (clickedValue[0].value === "next-turn") { confirm("Are you sure you want to proceed to next turn?");  nextTurn(); }
-	else if (clickedValue[0].value === "attack-button") {attackButtonClicked = true;}
-	else if (clickedValue[0].value === "ability-button") { console.log("Select fighter to use ability"); }
-	else if (clickedValue[0].value === "jedi-image" && attackButtonClicked === true) {	
+	if (clickedValue[0]) {
+		if (clickedValue[0].value === "next-turn") { nextTurn(); }
+		else if (clickedValue[0].value === "attack-button" && abilityButtonClicked === false) {
+			if (attackButtonClicked === false) {
+				attackButtonClicked = true;
+			}
+			else { attackButtonClicked = false; }
+			console.log(attackButtonClicked);
+		}																					
+		else if (clickedValue[0].value === "ability-button") {
+			console.log("Select fighter to use ability");	
+		}
+		else if (clickedValue[0].value === "jedi-image" && attackButtonClicked === true) {	
 		var fighter = {
 			name	:	clickedValue[1].value,
 			attack	:	clickedValue[3].value
@@ -147,5 +157,6 @@ if (gameOver) {document.removeEventListener('click', clickListener); return; }
 		console.log("Opponent is now at " + opponentLife + " life.");
 		}
 		if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
+		}
 	}
 }
