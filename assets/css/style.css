@@ -67,3 +67,12 @@ body {
 	border-color: green!important;
 	margin: 10px 0 0 10px;
 }
+
+.attacking-sith {
+	border-color: red!important;
+	margin: 10px 0 0 10px;
+}
+
+.unready {
+	border-color: gray!important;
+}
