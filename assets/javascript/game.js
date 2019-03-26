@@ -133,4 +133,3 @@ if (gameOver) {document.removeEventListener('click', clickListener); return; }
 		if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
 	}
 }
-
