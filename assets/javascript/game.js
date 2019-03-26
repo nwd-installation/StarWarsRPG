@@ -54,8 +54,12 @@ var turnCounter = 0;
 
 
 $("#next-turn").on("click", function() {
-console.log ("Next Turn Clicked"); turnCounter++; placeFighter(turnCounter-1, "sith"); placeJedi(turnCounter-1, "jedi"); 
+	console.log ("Next Turn Clicked");
+	turnCounter++;
+	placeFighter(turnCounter-1, "sith");
+	placeJedi(turnCounter-1, "jedi"); 
 });
+
 
 	
 $(".jedi-image").on("click", function() {
@@ -67,3 +71,9 @@ var fighter = {
 console.log ("You have chosen " + fighter.name);
 console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
 });
+
+document.addEventListener('click', function (event){
+        var clickedValue = event.target.attributes[3];
+        console.log(clickedValue)
+      })
+
