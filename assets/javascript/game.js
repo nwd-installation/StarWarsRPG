@@ -171,3 +171,7 @@ function clickListener(event) {
 
 
 //these are simplified MtG mechanics. you can only use fighter abilities during your own turn, and it always causes the fighter to become unready just as though he had attacked.
+
+//perhaps a gray overlay of fighter image for those who just came out that turn, to be removed as soon as the turn is over?
+
+//ultimately, it would be nice to develop a visual library to simplify some of the operations I am performing here.
