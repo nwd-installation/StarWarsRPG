@@ -8,7 +8,7 @@ body {
 	border-style: solid;
 	width: 150px;
 	height: 150px;
-	margin: 0 5px;
+	margin: 5px 5px;
 }
 
 .sith-image {
@@ -61,4 +61,9 @@ body {
 
 .inactive-button {
 	background-color: gray!important;
+}
+
+.selected-fighter {
+	border-color: green!important;
+	margin: 10px 0 0 10px;
 }

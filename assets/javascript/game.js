@@ -50,6 +50,9 @@ placeJedi(turnCounter, "jedi");
 
 
 function nextTurn() {
+	for (i = 0; i < jedi.name.length; i++) {
+	var targetDiv = document.getElementById(jedi.name[i]);
+	if (targetDiv) targetDiv.classList.remove("selected-fighter");  }
 	placeFighter(turnCounter, "sith");
 	// opponent will attack if able, or use abilities, before next jedi is placed
 	// need to indicate on screen what phase it is
@@ -72,19 +75,19 @@ function nextTurn() {
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife);
 		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
 	}
-	placeJedi(++turnCounter, "jedi");
-	for (var i = 0; i < turnCounter; i++) 
+	for (var i = 0; i <= turnCounter; i++) 
 	{
 		jedi.attackedThisTurn[i] = false;
-		jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP-- we may want to remove this if we decide that HP don't recover automatically, or recover slowly, etc
+		// jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP-- we may want to remove this if we decide that HP don't recover automatically, or recover slowly, etc
 	}
+	placeJedi(++turnCounter, "jedi");
 }
 
 document.addEventListener('click', clickListener);
 
 function clickListener(event) {
 if (gameOver) {document.removeEventListener('click', clickListener); return; }
-	var clickedValue = event.target.attributes; // console.log (clickedValue);
+	var clickedValue = event.target.attributes;
 	if (clickedValue[0].value === "next-turn") nextTurn();
 	if (clickedValue[0].value === "jedi-image") {	
 		var fighter = {
@@ -93,6 +96,8 @@ if (gameOver) {document.removeEventListener('click', clickListener); return; }
 		};
 		
 		if (turnCounter >= fighter.attack && jedi.hp[fighter.attack] > 0 && !jedi.attackedThisTurn[fighter.attack]) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
+		var targetDiv = document.getElementById(fighter.name);
+		targetDiv.setAttribute("class", "jedi-image selected-fighter");
 		opponentLife -= fighter.attack;
 		jedi.attackedThisTurn[fighter.attack] = true;
 		console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
