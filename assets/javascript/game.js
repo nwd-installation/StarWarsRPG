@@ -134,14 +134,16 @@ function clickListener(event) {
 		if (clickedValue[0].value === "next-turn") { nextTurn(); }
 		else if (clickedValue[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true;
+				attackButtonClicked = true; console.log("Select fighter(s) to attack opponent with");
 			}
 			else { attackButtonClicked = false; }
 			console.log(attackButtonClicked);
 		}																					
-		else if (clickedValue[0].value === "ability-button") {
-			console.log("Select fighter to use ability");	
-		}
+		else if (clickedValue[0].value === "ability-button" && attackButtonClicked === false) {
+			if(!abilityButtonClicked) { abilityButtonClicked = true; console.log("Select fighter to use ability"); }
+			else abilityButtonClicked = false;
+			console.log(abilityButtonClicked);
+		}	
 		else if (clickedValue[0].value === "jedi-image" && attackButtonClicked === true) {	
 		var fighter = {
 			name	:	clickedValue[1].value,
