@@ -81,8 +81,9 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 //attackphasePhase(side)
 	
 	for (i = 0; i < jedi.name.length; i++) {
-	var targetDiv = document.getElementById(jedi.name[i]);
-	if (targetDiv) targetDiv.classList.remove("selected-fighter");  }
+		var targetDiv = document.getElementById(jedi.name[i]);
+		if (targetDiv) targetDiv.classList.replace("selected-fighter","unready");
+	}
 	placeFighter(turnCounter, "sith");
 	// opponent will attack if able, or use abilities, before next jedi is placed
 	// need to indicate on screen what phase it is
