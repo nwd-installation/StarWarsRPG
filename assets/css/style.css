@@ -60,7 +60,14 @@ body {
 }
 
 .inactive-button {
-	background-color: gray!important;
+	background-color: gray;
+	text-align:center;
+	border: 3px;
+	border-color: white;
+	border-style: solid;
+	margin: 1em 1em;
+	color: white;
+	font-weight: bold;
 }
 
 .selected-fighter {

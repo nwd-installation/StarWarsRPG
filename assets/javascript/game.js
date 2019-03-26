@@ -126,7 +126,8 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife);
 		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
 	}
-	attackButtonClicked = false;
+	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("inactive-button","control-button");
+	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("inactive-button","control-button");
 	for (var i = 0; i <= turnCounter; i++) 
 	{
 		jedi.attackedThisTurn[i] = false;
@@ -149,14 +150,14 @@ function clickListener(event) {
 		if (clickedValue.attributes[0].value === "next-turn") { nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; console.log("Select fighter(s) to attack opponent with"); //inactive-button
+				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter(s) to attack opponent with"); 
 			}
-			else { attackButtonClicked = false; }
+			else { attackButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); }
 			console.log(attackButtonClicked);
 		}																					
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
-			if(!abilityButtonClicked) { abilityButtonClicked = true; console.log("Select fighter to use ability"); }
-			else abilityButtonClicked = false;
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter to use ability"); }
+			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); }
 			console.log(abilityButtonClicked);
 		}	
 		else if (clickedValue.attributes[0].value === "jedi-image" && attackButtonClicked === true) {	
