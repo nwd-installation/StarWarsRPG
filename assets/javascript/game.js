@@ -49,7 +49,7 @@ placeJedi(turnCounter, "jedi");
 
 
 
-$("#next-turn").on("click", function() {
+function nextTurn() {
 	placeFighter(turnCounter, "sith");
 	// opponent will attack if able, or use abilities, before next jedi is placed
 	// need to indicate on screen what phase it is
@@ -57,7 +57,7 @@ $("#next-turn").on("click", function() {
 		var attacking = [];
 		var attackval = 0;
 		var iteratorLimit;
-		if (turnCounter > sith.name.length) iteratorLimit = sith.name.length;
+		if (turnCounter > sith.name.length) iteratorLimit = sith.name.length; // only iterate up to the number of fighters
 		else iteratorLimit = turnCounter;
 		for (var i = 0; i < iteratorLimit; i++) {
 			attacking.push(sith.name[i]);
@@ -70,7 +70,7 @@ $("#next-turn").on("click", function() {
 		console.log("Select fighters to block.");
 		
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife);
-		if (playerLife < 1) console.log ("You lose!");
+		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
 	}
 	placeJedi(++turnCounter, "jedi");
 	for (var i = 0; i < turnCounter; i++) 
@@ -78,11 +78,14 @@ $("#next-turn").on("click", function() {
 		jedi.attackedThisTurn[i] = false;
 		jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP-- we may want to remove this if we decide that HP don't recover automatically, or recover slowly, etc
 	}
-});
+}
 
-document.addEventListener('click', function (event){
-	var clickedValue = event.target.attributes;
+document.addEventListener('click', clickListener);
 
+function clickListener(event) {
+if (gameOver) {document.removeEventListener('click', clickListener); return; }
+	var clickedValue = event.target.attributes; // console.log (clickedValue);
+	if (clickedValue[0].value === "next-turn") nextTurn();
 	if (clickedValue[0].value === "jedi-image") {	
 		var fighter = {
 			name	:	clickedValue[1].value,
@@ -95,6 +98,7 @@ document.addEventListener('click', function (event){
 		console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
 		console.log("Opponent is now at " + opponentLife + " life.");
 		}
-		if (opponentLife < 1) {gameOver = true; console.log("You won!");}
+		if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
 	}
-});
+}
+
