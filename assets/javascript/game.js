@@ -111,6 +111,10 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		jedi.attackedThisTurn[i] = false;
 		// jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP-- we may want to remove this if we decide that HP don't recover automatically, or recover slowly, etc
 	}
+	for (i = 0; i < jedi.name.length; i++) {
+		var targetDiv = document.getElementById(jedi.name[i]);
+		if (targetDiv) targetDiv.classList.remove("unready");
+	}
 	placeJedi(++turnCounter, "jedi");
 }
 
