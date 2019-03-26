@@ -10,6 +10,10 @@ var playerLife = 20;
 //continued: if the fighter attacked during a player's last turn, that player may not block or use abilities until the player's next turn (technically, the untap phase)
 //phases of a player's turn are untap, upkeep, attack/use abilities (note, what about abilities being played as "instant"?)
 
+
+var attackButtonClicked = false;
+
+
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) { 
 		var imageFighter = $("<img>");
@@ -106,6 +110,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife);
 		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
 	}
+	attackButtonClicked = false;
 	for (var i = 0; i <= turnCounter; i++) 
 	{
 		jedi.attackedThisTurn[i] = false;
@@ -123,8 +128,11 @@ document.addEventListener('click', clickListener);
 function clickListener(event) {
 if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target.attributes;
-	if (clickedValue[0].value === "next-turn") nextTurn();
-	if (clickedValue[0].value === "jedi-image") {	
+	// console.log(clickedValue[0]);
+	if (clickedValue[0].value === "next-turn") { confirm("Are you sure you want to proceed to next turn?");  nextTurn(); }
+	else if (clickedValue[0].value === "attack-button") {attackButtonClicked = true;}
+	else if (clickedValue[0].value === "ability-button") { console.log("Select fighter to use ability"); }
+	else if (clickedValue[0].value === "jedi-image" && attackButtonClicked === true) {	
 		var fighter = {
 			name	:	clickedValue[1].value,
 			attack	:	clickedValue[3].value
