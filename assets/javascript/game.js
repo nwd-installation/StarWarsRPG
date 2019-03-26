@@ -76,7 +76,7 @@ $("#next-turn").on("click", function() {
 	for (var i = 0; i < turnCounter; i++) 
 	{
 		jedi.attackedThisTurn[i] = false;
-		jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP
+		jedi.hp[i] = jedi.attack[i]; //this is meant to restore fighter HP-- we may want to remove this if we decide that HP don't recover automatically, or recover slowly, etc
 	}
 });
 

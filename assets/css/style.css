@@ -8,6 +8,7 @@ body {
 	border-style: solid;
 	width: 150px;
 	height: 150px;
+	margin: 0 5px;
 }
 
 .sith-image {
@@ -16,6 +17,7 @@ body {
 	border-style: solid;
 	width: 150px;
 	height: 150px;
+	margin: 0 5px;
 }
 #next-turn {
 	text-align:center;
@@ -34,4 +36,8 @@ body {
 
 .jumbotron {
 	text-align: center;
+}
+
+.fighter-row {
+	height: 180px;
 }
