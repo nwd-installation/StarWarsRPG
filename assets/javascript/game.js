@@ -1,5 +1,8 @@
 var opponentLife = 20;
 var playerLife = 20;
+// sides = ["sith", "jedi"];
+// side = sides[Math.floor(Math.random * 2)]; // to randomize which side goes first. should also add logic for which side player is playing as
+
 
 //definitions to be used: a turn is all phases of a single player's turn (whether it is player or opponent). A round is a complete round of all players' turns.
 //game should inform player: your turn. Click "Attack to select attackers or click use ability to use a fighter's abilities"
