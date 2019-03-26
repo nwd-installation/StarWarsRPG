@@ -10,6 +10,8 @@ var playerLife = 20;
 //continued: if the fighter attacked during a player's last turn, that player may not block or use abilities until the player's next turn (technically, the untap phase)
 //phases of a player's turn are untap, upkeep, attack/use abilities (note, what about abilities being played as "instant"?)
 
+// note: once the blocking functionality is added, then I will need to add logic to allow the attacking player to decide how the damage gets spread out. or, just let the strongest absorb it first in order to simplify it. not sure yet about trample mechanics. i.e., should excess damage carry over to player? also, should attackers receive damage from their combatants (the blockers) as well as the blockers from the attackers?
+
 
 var attackButtonClicked = false;
 var abilityButtonClicked = false;
