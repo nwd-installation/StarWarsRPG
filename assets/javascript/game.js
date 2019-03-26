@@ -2,6 +2,10 @@ var opponentLife = 20;
 var playerLife = 20;
 
 //definitions to be used: a turn is all phases of a single player's turn (whether it is player or opponent). A round is a complete round of all players' turns.
+//game should inform player: your turn. Click "Attack to select attackers or click use ability to use a fighter's abilities"
+//note: a fighter may not attack or use abilities until he has been out for one full round, although he can defend ("block")
+//continued: if the fighter attacked during a player's last turn, that player may not block or use abilities until the player's next turn (technically, the untap phase)
+//phases of a player's turn are untap, upkeep, attack/use abilities (note, what about abilities being played as "instant"?)
 
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) { 
