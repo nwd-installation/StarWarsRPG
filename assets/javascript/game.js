@@ -126,6 +126,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife);
 		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
 	}
+	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("inactive-button","control-button2"); 
 	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("inactive-button","control-button");
 	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("inactive-button","control-button");
 	for (var i = 0; i <= turnCounter; i++) 
@@ -147,7 +148,7 @@ function clickListener(event) {
 	var clickedValue = event.target;
 	// console.log(clickedValue.attributes[0]);
 	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn") { nextTurn(); }
+		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button"); nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter(s) to attack opponent with"); 

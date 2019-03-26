@@ -19,20 +19,6 @@ body {
 	height: 150px;
 	margin: 0 5px;
 }
-#next-turn {
-	text-align:center;
-	border: 3px;
-	border-color: white;
-	border-style: solid;
-	background-color: orange;
-	margin-top: 1em;
-	color: white;
-	font-weight: bold;
-}
-
-#next-turn-column {
-	padding-right:0px;
-}
 
 .jumbotron {
 	text-align: center;
@@ -57,6 +43,21 @@ body {
 	margin: 1em 1em;
 	color: white;
 	font-weight: bold;
+}
+
+.control-button2 {
+	text-align:center;
+	border: 3px;
+	border-color: white;
+	border-style: solid;
+	background-color: orange;
+	margin: 1em 1em;
+	color: white;
+	font-weight: bold;
+}
+
+#next-turn-column {
+	padding-right:0px;
 }
 
 .inactive-button {
