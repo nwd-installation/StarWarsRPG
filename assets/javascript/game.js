@@ -56,7 +56,10 @@ $("#next-turn").on("click", function() {
 	if (turnCounter > 0) {
 		var attacking = [];
 		var attackval = 0;
-		for (var i = 0; i < turnCounter; i++) {
+		var iteratorLimit;
+		if (turnCounter > sith.name.length) iteratorLimit = sith.name.length;
+		else iteratorLimit = turnCounter;
+		for (var i = 0; i < iteratorLimit; i++) {
 			attacking.push(sith.name[i]);
 			attackval += sith.attack[i];
 		}
