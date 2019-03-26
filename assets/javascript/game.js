@@ -1,6 +1,8 @@
 var opponentLife = 20;
 var playerLife = 20;
 
+//definitions to be used: a turn is all phases of a single player's turn (whether it is player or opponent). A round is a complete round of all players' turns.
+
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) { 
 		var imageFighter = $("<img>");
@@ -28,19 +30,19 @@ function placeJedi(index, lightSideDarkSide) {
 /*
 var fighter = {
 	
-	Obi-Wan Kenobi: {},
-	Qui-Gon Jinn: {},
-	Mace Windu: {},
-	Yoda: {},
-	Anakin Skywalker: {},
-	Darth Maul: {},
-	Darth Plagueis: {},
-	Chancellor Palpatine: {},
-	Darth Vader: {},
-	Darth Sidious: {},
+	Obi-Wan Kenobi: {rank:1,side:"jedi",justsummoned=true},
+	Qui-Gon Jinn: {rank:2,side:"jedi",justsummoned=true},
+	Mace Windu: {rank:3,side:"jedi",justsummoned=true},
+	Yoda: {rank:4,side:"jedi",justsummoned=true},
+	Anakin Skywalker: {rank:5,side:"jedi",justsummoned=true},
+	Darth Maul: {rank:1,side:"sith",justsummoned=true},
+	Darth Plagueis: {rank:2,side:"sith",justsummoned=true},
+	Chancellor Palpatine: {rank:3,side:"sith",justsummoned=true},
+	Darth Vader: {rank:4,side:"sith",justsummoned=true},
+	Darth Sidious: {rank:5,side:"sith",justsummoned=true}
 }
 */
-	
+
 var jedi = {
 	
 	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
