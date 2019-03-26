@@ -58,3 +58,7 @@ body {
 	color: white;
 	font-weight: bold;
 }
+
+.inactive-button {
+	background-color: gray!important;
+}
