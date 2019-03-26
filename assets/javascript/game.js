@@ -25,6 +25,22 @@ function placeJedi(index, lightSideDarkSide) {
 	}	
 }
 
+/*
+var fighter = {
+	
+	Obi-Wan Kenobi: {},
+	Qui-Gon Jinn: {},
+	Mace Windu: {},
+	Yoda: {},
+	Anakin Skywalker: {},
+	Darth Maul: {},
+	Darth Plagueis: {},
+	Chancellor Palpatine: {},
+	Darth Vader: {},
+	Darth Sidious: {},
+}
+*/
+	
 var jedi = {
 	
 	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
