@@ -12,10 +12,23 @@ var playerLife = 20;
 
 // note: once the blocking functionality is added, then I will need to add logic to allow the attacking player to decide how the damage gets spread out. or, just let the strongest absorb it first in order to simplify it. not sure yet about trample mechanics. i.e., should excess damage carry over to player? also, should attackers receive damage from their combatants (the blockers) as well as the blockers from the attackers?
 
+//to automate the defense as much as possible, all damage points done to blockers will be divided evenly by applying them one point at a time to the blocking defenders, starting with the strongest blocker, and in descending order of hp.
+
+//only one attack of x fighters per turn
+
 
 var attackButtonClicked = false;
 var abilityButtonClicked = false;
 
+/*
+var textElements = {
+	turnTrackerText : document.getElementById(""),
+	RoundTrackerText : document.getElementById(""),
+	playerHPText : document.getElementById(""),
+	opponentHPText : document.getElementById(""),
+	notificationText : document.getElementById("")
+};  
+*/
 
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) { 
@@ -136,7 +149,7 @@ function clickListener(event) {
 		if (clickedValue[0].value === "next-turn") { nextTurn(); }
 		else if (clickedValue[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; console.log("Select fighter(s) to attack opponent with");
+				attackButtonClicked = true; console.log("Select fighter(s) to attack opponent with"); //inactive-button
 			}
 			else { attackButtonClicked = false; }
 			console.log(attackButtonClicked);
