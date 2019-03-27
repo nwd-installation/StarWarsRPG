@@ -19,8 +19,8 @@ var textElements = {
 	turnTrackerText : document.getElementById("turn-tracker"),
 	roundTrackerText : document.getElementById("round-tracker"),
 	playerHPText : document.getElementById("player-health"),
-	opponentHPText : document.getElementById("opponent-health")
-	// notificationText : document.getElementById("notifications")
+	opponentHPText : document.getElementById("opponent-health"),
+	notificationText : document.getElementById("notifications")
 };  
 
 // sides = ["sith", "jedi"];
@@ -139,10 +139,10 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		console.log(attacking);
 		console.log("For a total of " + attackval + " attack points.");
 		//need to implement a blocking mechanic.
-		console.log("Select fighters to block.");
+		console.log("Select fighters to block."); textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
 		
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife); textElements.playerHPText.textContent = playerLife;
-		if (playerLife < 1) {console.log ("You lose! Game Over"); gameOver = true;}
+		if (playerLife < 1) {console.log ("You lose! Game Over"); textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
 	}
 	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("inactive-button","control-button2"); 
 	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("inactive-button","control-button");
@@ -168,7 +168,7 @@ function clickListener(event) {
 		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter(s) to attack opponent with");
+				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
 				for (x = 0; x < jedi.name.length; x++) {
 					if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
 						var targetDiv = document.getElementById(jedi.name[x]);
@@ -187,7 +187,7 @@ function clickListener(event) {
 			}
 		}																					
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
-			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter to use ability"); } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
 			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); } 
 		}	
 		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter" && attackButtonClicked === true) {	
@@ -202,8 +202,8 @@ function clickListener(event) {
 				opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
 				jedi.attackedThisTurn[fighter.attack] = true;
 				console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
-				console.log("Opponent is now at " + opponentLife + " life.");
-				if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
+				console.log("Opponent is now at " + opponentLife + " life."); 
+				if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 			}
 		}
 		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
