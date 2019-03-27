@@ -10,6 +10,10 @@
 
 //only one attack of x fighters per turn
 
+//classes of fighter img elements will be of the pattern: fighter jedi or fighter sith
+
+//its about time for a refactor
+
 
 var textElements = {
 	turnTrackerText : document.getElementById("turn-tracker"),
@@ -30,6 +34,13 @@ var roundCounter = 0; textElements.roundTrackerText.textContent = roundCounter+1
 
 var attackButtonClicked = false;
 var abilityButtonClicked = false;
+
+// function highlightFighterByElement() {} // function takes in an element of a fighter and colors its border in the indicated color
+// function highlightFighterByName() {} // function takes in an name of a fighter and colors its border in the indicated color
+// function selectFighterByElement() {} // function takes in an element of a fighter and "selects it" by adjusting its margins to move it down and right
+// function selectFighterByName() {} // function takes in an name of a fighter and selects it" by adjusting its margins to move it down and right
+
+
 
 function placeFighter(index, lightSideDarkSide) {
 	if (index < sith.name.length) { 
@@ -106,7 +117,10 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	
 	for (i = 0; i < jedi.name.length; i++) {
 		var targetDiv = document.getElementById(jedi.name[i]);
-		if (targetDiv) targetDiv.classList.replace("selected-fighter","unready");
+		if (targetDiv){
+			targetDiv.classList.remove("highlighted-fighter");
+			targetDiv.classList.replace("selected-fighter","unready");
+		}
 	}
 	placeFighter(roundCounter, "sith");
 	// opponent will attack if able, or use abilities, before next jedi is placed
@@ -146,8 +160,6 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	placeJedi(++roundCounter, "jedi");
 	textElements.roundTrackerText.textContent = roundCounter+1;
 }
-
-document.addEventListener('click', clickListener);
 
 function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
@@ -211,3 +223,6 @@ function clickListener(event) {
 //perhaps a gray overlay of fighter image for those who just came out that turn, to be removed as soon as the turn is over?
 
 //ultimately, it would be nice to develop a visual library to simplify some of the operations I am performing here.
+
+
+document.addEventListener('click', clickListener);
