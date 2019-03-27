@@ -72,8 +72,15 @@ body {
 	font-weight: bold;
 }
 
-.selected-fighter {
+.highlighted-fighter {
 	border-color: green!important;
+}
+
+.NA-fighter {
+	border-color: red!important;
+}
+
+.selected-fighter {
 	margin: 10px 0 0 10px;
 }
 

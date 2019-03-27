@@ -22,7 +22,7 @@ var textElements = {
 // sides = ["sith", "jedi"];
 // side = sides[Math.floor(Math.random * 2)]; // to randomize which side goes first. should also add logic for which side player is playing as
 
-var side = "jedi"; textElements.turnTrackerText.textContent = side;
+var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
 var playerLife = 20; textElements.playerHPText.textContent = playerLife;
 var roundCounter = 0; textElements.roundTrackerText.textContent = roundCounter+1;
@@ -52,6 +52,8 @@ function placeJedi(index, lightSideDarkSide) {
 		imageFighter.attr("attack-value", jedi.attack[index]);
 		imageFighter.attr("alt", jedi.name[index]);
 		$("#"+lightSideDarkSide).append(imageFighter);
+		jedi.inPlay[index] = true;
+		jedi.inPlay[index] = true;
 	}	
 }
 
@@ -77,7 +79,8 @@ var jedi = {
 	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/MaceWindu.jpg","./assets/images/Yoda.jpg","./assets/images/Anakin.jpg"],
 	attack	: [1,2,3,4,5],
 	hp		: [1,2,3,4,5],
-	attackedThisTurn	: [false, false, false, false, false]
+	attackedThisTurn	: [false, false, false, false, false],
+	inPlay	: [false, false, false, false, false]
 };
 	
 var sith = {
@@ -85,7 +88,8 @@ var sith = {
 	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/Palpatine.jpg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
 	attack	: [1,2,3,4,5],
 	hp		: [1,2,3,4,5],
-	attackedThisTurn	: [false, false, false, false, false]
+	attackedThisTurn	: [false, false, false, false, false],
+	inPlay	: [false, false, false, false, false]
 };
  
 
@@ -129,7 +133,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("inactive-button","control-button2"); 
 	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("inactive-button","control-button");
 	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("inactive-button","control-button");
-	side = "jedi"; textElements.turnTrackerText.textContent = side;
+	currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 	for (var i = 0; i <= roundCounter; i++) 
 	{
 		jedi.attackedThisTurn[i] = false;
@@ -149,35 +153,47 @@ function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
 	// console.log(clickedValue.attributes[0]);
-	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button");  side = "sith"; textElements.turnTrackerText.textContent = side; nextTurn(); }
+	if (clickedValue.attributes[0]) { console.log(clickedValue.attributes[0].value); console.log(attackButtonClicked);
+		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter(s) to attack opponent with"); 
+				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter(s) to attack opponent with");
+				for (x = 0; x < jedi.name.length; x++) {
+					if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
+						var targetDiv = document.getElementById(jedi.name[x]);
+						targetDiv.classList.add("highlighted-fighter");
+					}
+				}
 			}
-			else { attackButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); }
-			console.log(attackButtonClicked);
+				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
+			else { attackButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button");
+				for (x = 0; x < jedi.name.length; x++) {
+						if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
+							var targetDiv = document.getElementById(jedi.name[x]);
+							targetDiv.classList.remove("highlighted-fighter");
+						}
+				}
+			}
 		}																					
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
-			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter to use ability"); }
-			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); }
-			console.log(abilityButtonClicked);
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); console.log("Select fighter to use ability"); } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
+			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); } 
 		}	
-		else if (clickedValue.attributes[0].value === "jedi-image" && attackButtonClicked === true) {	
-		var fighter = {
-			name	:	clickedValue.attributes[1].value,
-			attack	:	clickedValue.attributes[3].value
-		};
+		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter" && attackButtonClicked === true) {	
+			var fighter = {
+				name	:	clickedValue.attributes[1].value,
+				attack	:	clickedValue.attributes[3].value
+			};
 		
-		if (roundCounter >= fighter.attack && jedi.hp[fighter.attack] > 0 && !jedi.attackedThisTurn[fighter.attack]) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
-		var targetDiv = document.getElementById(fighter.name);
-		targetDiv.setAttribute("class", "jedi-image selected-fighter");
-		opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
-		jedi.attackedThisTurn[fighter.attack] = true;
-		console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
-		console.log("Opponent is now at " + opponentLife + " life.");
-		}
-		if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
+			if (roundCounter >= fighter.attack && jedi.hp[fighter.attack] > 0) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
+				var targetedDiv = document.getElementById(fighter.name);
+				targetedDiv.setAttribute("class", "jedi-image highlighted-fighter selected-fighter");
+				opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
+				jedi.attackedThisTurn[fighter.attack] = true;
+				console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
+				console.log("Opponent is now at " + opponentLife + " life.");
+				if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
+			}
 		}
 	}
 }
