@@ -164,8 +164,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
-	// console.log(clickedValue.attributes[0]);
-	if (clickedValue.attributes[0]) { console.log(clickedValue.attributes[0].value); console.log(attackButtonClicked);
+	if (clickedValue.attributes[0]) {
 		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
