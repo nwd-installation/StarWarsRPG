@@ -195,6 +195,9 @@ function clickListener(event) {
 				if (opponentLife < 1) { console.log("You won! Game Over"); gameOver = true;}
 			}
 		}
+		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
+			clickedValue.classList.remove("selected-fighter");
+		}
 	}
 }
 
