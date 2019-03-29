@@ -42,15 +42,15 @@ var abilityButtonClicked = false;
 
 
 
-function placeFighter(index, lightSideDarkSide) {
-	if (index < sith.name.length) { 
-		var imageFighter = $("<img>");
+function placeFighter(rank, lightSideDarkSide) {
+	if (rank < sith.name.length) { 
+		imageFighter = $("<img>");
 		imageFighter.addClass(lightSideDarkSide + "-image");
-		imageFighter.attr('id', sith.name[index]);
-		imageFighter.attr("src", sith.imagePath[index]);
-		imageFighter.attr("attack-value", sith.attack[index]);
-		imageFighter.attr("alt", sith.name[index]);
-		$("#"+lightSideDarkSide).append(imageFighter);
+		imageFighter.attr('id', sith.name[rank]);
+		imageFighter.attr("src", sith.imagePath[rank]);
+		imageFighter.attr("attack-value", sith.attack[rank]);
+		imageFighter.attr("alt", sith.name[rank]);
+		$("#"+lightSideDarkSide + (rank+1)).append(imageFighter);
 	}	
 }
 
@@ -62,27 +62,24 @@ function placeJedi(index, lightSideDarkSide) {
 		imageFighter.attr("src", jedi.imagePath[index]);
 		imageFighter.attr("attack-value", jedi.attack[index]);
 		imageFighter.attr("alt", jedi.name[index]);
-		$("#"+lightSideDarkSide).append(imageFighter);
-		jedi.inPlay[index] = true;
-		jedi.inPlay[index] = true;
+		$("#"+lightSideDarkSide + (index+1)).append(imageFighter);
+		// jedi.inPlay[index] = true;
 	}	
 }
 
-/*
 var fighter = {
 	
-	Obi-Wan Kenobi: {rank:1,side:"jedi",justsummoned=true,inPlay:false},
-	Qui-Gon Jinn: {rank:2,side:"jedi"justsummoned=true,inPlay:false},
-	Mace Windu: {rank:3,side:"jedi"justsummoned=true,inPlay:false},
-	Yoda: {rank:4,side:"jedi"justsummoned=true,inPlay:false},
-	Anakin Skywalker: {rank:5,side:"jedi"justsummoned=true,inPlay:false},
-	Darth Maul: {rank:1,side:"sith"justsummoned=true,inPlay:false},
-	Darth Plagueis: {rank:2,side:"sith"justsummoned=true,inPlay:false},
-	Chancellor Palpatine: {rank:3,side:"sith"justsummoned=true,inPlay:false},
-	Darth Vader: {rank:4,side:"sith"justsummoned=true,inPlay:false},
-	Darth Sidious: {rank:5,side:"sith",justsummoned=true,inPlay:false}
-}
-*/
+	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false},
+	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false},
+	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false},
+	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false},
+	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false},
+	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false},
+	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false},
+	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false},
+	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false},
+	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false}
+};
 
 var jedi = {
 	
