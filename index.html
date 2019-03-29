@@ -15,23 +15,24 @@
 
   <div class="jumbotron"><h1>Final Star Wars Fantasy: the Gathering</h1></div>
 	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row" style="background-color:lightblue; height:4em; padding-top:1em;padding-bottom:1em;"><div class="col"><h3>Player: <span style="color:orange;" id="turn-tracker"></span></h3></div><div class="col"><h3>Round #<span style="color:orange;" id="round-tracker"></span></h3></div><div class="col"><h3>Your HP <span style="color:orange;" id="player-health"></span></h3></div><div class="col"><h3>Opponent's HP <span style="color:orange;" id="opponent-health"></span></h3></div></div>
 	</div>
 	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row text-dec">Opposing fighters</div>
 	</div>
 	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row fighter-row"><div class="col" id="sith"></div></div>
+		<div class="row"></div> <!-- spacer row -->
 	</div>
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row text-dec">Your fighters</div>
 	</div>
 	
-	<div class="container fighter-row">
+	<div class="container-fluid fighter-row">
 			<div class="row"><div class="col" id="jedi"></div></div>
 			<div class="row">
 				<div id="attack-button" class="col-md-2 control-button">Attack</div>
@@ -39,7 +40,7 @@
 				<div class="col-md-2 offset-md-10" id ="next-turn-column"><div id="next-turn" class="control-button2">End Turn</div></div>
 			</div>
 	</div>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row" style="margin-top: 50px;">
 			<div class="col-8"><h5><span id="notifications"></span></h5></div>
 		</div>
