@@ -71,16 +71,16 @@ function placeJedi(index, lightSideDarkSide) {
 /*
 var fighter = {
 	
-	Obi-Wan Kenobi: {rank:1,side:"jedi",justsummoned=true},
-	Qui-Gon Jinn: {rank:2,side:"jedi",justsummoned=true},
-	Mace Windu: {rank:3,side:"jedi",justsummoned=true},
-	Yoda: {rank:4,side:"jedi",justsummoned=true},
-	Anakin Skywalker: {rank:5,side:"jedi",justsummoned=true},
-	Darth Maul: {rank:1,side:"sith",justsummoned=true},
-	Darth Plagueis: {rank:2,side:"sith",justsummoned=true},
-	Chancellor Palpatine: {rank:3,side:"sith",justsummoned=true},
-	Darth Vader: {rank:4,side:"sith",justsummoned=true},
-	Darth Sidious: {rank:5,side:"sith",justsummoned=true}
+	Obi-Wan Kenobi: {rank:1,side:"jedi",justsummoned=true,inPlay:false},
+	Qui-Gon Jinn: {rank:2,side:"jedi"justsummoned=true,inPlay:false},
+	Mace Windu: {rank:3,side:"jedi"justsummoned=true,inPlay:false},
+	Yoda: {rank:4,side:"jedi"justsummoned=true,inPlay:false},
+	Anakin Skywalker: {rank:5,side:"jedi"justsummoned=true,inPlay:false},
+	Darth Maul: {rank:1,side:"sith"justsummoned=true,inPlay:false},
+	Darth Plagueis: {rank:2,side:"sith"justsummoned=true,inPlay:false},
+	Chancellor Palpatine: {rank:3,side:"sith"justsummoned=true,inPlay:false},
+	Darth Vader: {rank:4,side:"sith"justsummoned=true,inPlay:false},
+	Darth Sidious: {rank:5,side:"sith",justsummoned=true,inPlay:false}
 }
 */
 
