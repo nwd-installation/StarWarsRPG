@@ -8,7 +8,7 @@ body {
 	border-style: solid;
 	width: 150px;
 	height: 150px;
-	margin: 5px 5px;
+	/* margin: 5px 5px; */
 }
 
 .sith-image {
@@ -22,10 +22,12 @@ body {
 
 .jumbotron {
 	text-align: center;
+	padding: 3rem 2rem;
+	margin-bottom: 1rem;
 }
 
 .fighter-row {
-	height: 180px;
+	/* height: 180px; */
 }
 
 .text-dec {

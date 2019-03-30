@@ -63,7 +63,7 @@ function placeJedi(index, lightSideDarkSide) {
 		imageFighter.attr("attack-value", jedi.attack[index]);
 		imageFighter.attr("alt", jedi.name[index]);
 		$("#"+lightSideDarkSide + (index+1)).append(imageFighter);
-		// jedi.inPlay[index] = true;
+		jedi.inPlay[index] = true;
 	}	
 }
 
