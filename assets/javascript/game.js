@@ -84,6 +84,7 @@ for (let i = 0; i < fighterNames.length; i++)
 		imageFighter.attr("side", currentFighter.side);
 		imageFighter.attr("alt", currentFighter.name);
 		$("#"+lightSideDarkSide + (strength)).append(imageFighter);
+		fighters[currentFighter.name].inPlay = true;
 	}	
 }
 
@@ -175,12 +176,23 @@ function clickListener(event) {
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
-				for (x = 0; x < jedi.name.length; x++) {
-					if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
+				//var targetDivArray = document.getElementsByClassName("fighter-image");
+				//console.log(targetDivArray);
+				for (var x = 0; x < fighterNames.length; x++)
+				{
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn) {
+					console.log(fighters[fighterNames[x]]);
+					targetDiv = document.getElementById(fighters[fighterNames[x]].name);
+					//console.log(targetDiv);
+					targetDiv.classList.add("highlighted-fighter");
+					}
+				}
+/*				for (x = 0; x < jedi.name.length; x++) {
+					if (roundCounter > jedi.attack[x] && jedi.inPlay[x] === true){
 						var targetDiv = document.getElementById(jedi.name[x]);
 						targetDiv.classList.add("highlighted-fighter");
 					}
-				}
+				} */ 
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
 			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");
