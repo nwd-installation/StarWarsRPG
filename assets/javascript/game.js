@@ -196,9 +196,10 @@ function clickListener(event) {
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
 			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");
-				for (x = 0; x < jedi.name.length; x++) {
-						if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
-							var targetDiv = document.getElementById(jedi.name[x]);
+				for (x = 0; x < fighterNames.length; x++) {
+						if (roundCounter >= fighters[fighterNames[x]].rank && fighters[fighterNames[x]].inPlay === true){
+							var targetDiv = document.getElementById(fighterNames[x]);
+							targetDiv.classList.remove("selected-fighter");
 							targetDiv.classList.remove("highlighted-fighter");
 						}
 				}
@@ -214,7 +215,7 @@ function clickListener(event) {
 				attack	:	clickedValue.attributes[3].value
 			};
 		
-			if (roundCounter >= fighter.attack && jedi.hp[fighter.attack] > 0) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
+			if (roundCounter > fighter.attack && jedi.hp[fighter.attack] > 0) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
 				var targetedDiv = document.getElementById(fighter.name);
 				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
