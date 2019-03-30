@@ -139,7 +139,8 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("pressed-button","control-button2"); 
 	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("pressed-button","control-button");
 	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("pressed-button","control-button");
-	sendButtonClicked = false; targetDiv = document.getElementById("send-button"); targetDiv.classList.replace("pressed-button","control-button"); if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
+	sendButtonClicked = false; targetDiv = document.getElementById("send-button"); targetDiv.classList.replace("pressed-button","control-button");
+	if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
 	currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 	for (var i = 0; i < fighterNames.length; i++) 
 	{
@@ -170,7 +171,7 @@ function clickListener(event) {
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn) {
 					targetDiv = document.getElementById(fighters[fighterNames[x]].name);
-					targetDiv.classList.add("highlighted-fighter");
+					if (!targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.add("highlighted-fighter");
 					}
 				} 
 			}
