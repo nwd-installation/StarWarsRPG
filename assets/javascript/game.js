@@ -250,7 +250,7 @@ function clickListener(event) {
 				playedDuring: clickedValue.attributes[6].value
 			}; console.log("fighter is "); console.log(fighter);
 			for (var z = 0 ; z < attackCadre.length; z++) {
-				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1); 
+				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1);  console.log(attackCadre);
 			}
 			clickedValue.classList.remove("selected-fighter");			
 		}
