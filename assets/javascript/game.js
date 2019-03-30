@@ -144,11 +144,14 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	for (var i = 0; i < fighterNames.length; i++) 
 	{
 		fighters[fighterNames[i]].tapped = false;
+		targetDiv = document.getElementById(fighterNames[i]);
+		if (targetDiv) targetDiv.classList.remove("tapped-fighter");
 		
 	}
 	
 	placeFighter(++roundCounter, "jedi");
 	textElements.roundTrackerText.textContent = roundCounter;
+	textElements.notificationText.textContent = "Your turn. You may 'Attack' or 'Use Abilities'."
 }
 
 function clickListener(event) {
@@ -191,12 +194,15 @@ function clickListener(event) {
 			for (var x = 0; x < attackCadre.length; x++) {
 				totalAttack += parseInt(attackCadre[x].attack);
 				fighters[attackCadre[x].name].tapped = true;
+				var targetDiv = document.getElementById(attackCadre[x].name);
+				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
 			}				
 			opponentLife -= totalAttack; textElements.opponentHPText.textContent = opponentLife;
 			console.log("total attack : " + totalAttack);
 			console.log("Opponent is now at " + opponentLife + " life."); 
 			textElements.notificationText.textContent = "Your fighters did " + totalAttack + " damage to opponent, bringing him to " + opponentLife + " life.";
 			attackCadre = [];
+			// replace highlighted with tapped indicator
 			if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 		}
 				

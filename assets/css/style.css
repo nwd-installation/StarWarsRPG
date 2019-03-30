@@ -96,7 +96,7 @@ body {
 	margin: 10px 0 0 10px;
 }
 
-.unready {
-	border-color: gray!important;
+.tapped-fighter {
+	border-color: yellow;
 	margin: 10px 0 0 10px;
 }
