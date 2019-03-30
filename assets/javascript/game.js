@@ -45,7 +45,7 @@ var abilityButtonClicked = false;
 function placeFighter(rank, lightSideDarkSide) {
 	if (rank < sith.name.length) { 
 		imageFighter = $("<img>");
-		imageFighter.addClass(lightSideDarkSide + "-image");
+		imageFighter.addClass("fighter-image");
 		imageFighter.attr('id', sith.name[rank]);
 		imageFighter.attr("src", sith.imagePath[rank]);
 		imageFighter.attr("attack-value", sith.attack[rank]);
@@ -57,7 +57,7 @@ function placeFighter(rank, lightSideDarkSide) {
 function placeJedi(index, lightSideDarkSide) {
 	if (index < jedi.name.length) {
 		var imageFighter = $("<img>");
-		imageFighter.addClass(lightSideDarkSide + "-image");
+		imageFighter.addClass("fighter-image");
 		imageFighter.attr('id', jedi.name[index]);
 		imageFighter.attr("src", jedi.imagePath[index]);
 		imageFighter.attr("attack-value", jedi.attack[index]);
@@ -187,7 +187,7 @@ function clickListener(event) {
 			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
 			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); } 
 		}	
-		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter" && attackButtonClicked === true) {	
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {	
 			var fighter = {
 				name	:	clickedValue.attributes[1].value,
 				attack	:	clickedValue.attributes[3].value
@@ -195,7 +195,7 @@ function clickListener(event) {
 		
 			if (roundCounter >= fighter.attack && jedi.hp[fighter.attack] > 0) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
 				var targetedDiv = document.getElementById(fighter.name);
-				targetedDiv.setAttribute("class", "jedi-image highlighted-fighter selected-fighter");
+				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
 				jedi.attackedThisTurn[fighter.attack] = true;
 				console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
@@ -203,7 +203,7 @@ function clickListener(event) {
 				if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 			}
 		}
-		else if (clickedValue.attributes[0].value === "jedi-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
 			clickedValue.classList.remove("selected-fighter");
 		}
 	}

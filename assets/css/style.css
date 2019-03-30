@@ -2,13 +2,14 @@ body {
 	background-color: #b8c6f5; /* need a cool background image */
 }
 
+/* 
 .jedi-image {
 	border: 3px;
 	border-color: black;
 	border-style: solid;
 	width: 150px;
 	height: 150px;
-	/* margin: 5px 5px; */
+	/* margin: 5px 5px; 
 }
 
 .sith-image {
@@ -17,7 +18,16 @@ body {
 	border-style: solid;
 	width: 150px;
 	height: 150px;
-	/* margin: 0 5px;  */
+	/* margin: 0 5px;  
+}
+*/
+
+.fighter-image {
+	border: 4px;
+	border-color: #111111;
+	border-style: solid;
+	width: 150px;
+	height: 150px;
 }
 
 .jumbotron {
