@@ -158,7 +158,7 @@ function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
 	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; nextTurn(); }
+		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; textElements.notificationText.textContent = ""; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false && sendButtonClicked === false) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; attackCadre = []; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
@@ -187,7 +187,7 @@ function clickListener(event) {
 				}
 			}
 		}
-		else if (clickedValue.attributes[0].value === "send-button" && attackButtonClicked === true && abilityButtonClicked === false && sendButtonClicked === false) {
+		else if (clickedValue.attributes[0].value === "send-button" && attackButtonClicked === true && abilityButtonClicked === false && sendButtonClicked === false && attackCadre.length > 0) {
 			if (clickedValue.classList.contains("control-button")) clickedValue.classList.replace("control-button","pressed-button");
 			sendButtonClicked = true;
 			var totalAttack = 0;
