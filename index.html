@@ -20,7 +20,7 @@
 			<div class="col" style="text-align: center"><h3>Player: <span style="color:orange;" id="turn-tracker"></span></h3></div><div class="col" style="text-align: center"><h3>Round #<span style="color:orange;" id="round-tracker"></span></h3></div>
 		</div>
 		<div class="row" style="background-color:lightblue; height:3em; padding-top:.5rem;padding-bottom:1em;">
-			<div class="col" style="text-align: center"><h3>Your HP <span style="color:orange;" id="player-health"></span></h3></div><div class="col" style="text-align: center"><h3>Opponent's HP <span style="color:orange;" id="opponent-health"></span></h3></div>
+			<div class="col" style="text-align: center"><h3>Your HP <span style="color:orange;" id="player-health"></span></h3></div><div class="col" style="text-align: center"><h3>Opponent HP <span style="color:orange;" id="opponent-health"></span></h3></div>
 		</div>
 	</div>
 	
@@ -30,11 +30,11 @@
 	
 	<div class="container">
 		<div class="row fighter-row">
-			<div class="col" id="sith1" style="padding: 0;"></div>
-			<div class="col" id="sith2" style="padding: 0;"></div>
-			<div class="col" id="sith3" style="padding: 0;"></div>
-			<div class="col" id="sith4" style="padding: 0;"></div>
-			<div class="col" id="sith5" style="padding: 0;"></div>
+			<div class="col-md-2" id="sith1"></div>
+			<div class="col-md-2" id="sith2"></div>
+			<div class="col-md-2" id="sith3"></div>
+			<div class="col-md-2" id="sith4"></div>
+			<div class="col-md-2" id="sith5"></div>
 		</div>
 	</div>
 
@@ -44,18 +44,24 @@
 	
 	<div class="container fighter-row">
 			<div class="row fighter-row">
-			<div class="col" id="jedi1" style="padding: 0;"></div>
-			<div class="col" id="jedi2" style="padding: 0;"></div>
-			<div class="col" id="jedi3" style="padding: 0;"></div>
-			<div class="col" id="jedi4" style="padding: 0;"></div>
-			<div class="col" id="jedi5" style="padding: 0;"></div>
+			<div class="col-md-2" id="jedi1"></div>
+			<div class="col-md-2" id="jedi2"></div>
+			<div class="col-md-2" id="jedi3"></div>
+			<div class="col-md-2" id="jedi4"></div>
+			<div class="col-md-2" id="jedi5"></div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
 			<div class="row">
-				<div id="attack-button" class="col-md-2 control-button">Attack</div>
-				<div id="ability-button" class="col-md-2 control-button control-button">Use Ability</div>
-				<div class="col-md-2" id ="next-turn-column"><div id="next-turn" class="control-button2">End Turn</div></div>
+				<div class="col-md-3">
+					<div id="attack-button" class="control-button">Attack</div>
+				</div>
+				<div class="col-md-3">
+					<div id="ability-button" class="control-button">Use Ability</div>
+				</div>
+				<div class="col-md-3">
+					<div id="next-turn" class="control-button">End Turn</div>
+				</div>
 			</div>
 	</div>
 	<div class="container-fluid">

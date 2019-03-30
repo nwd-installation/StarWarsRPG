@@ -141,9 +141,9 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife); textElements.playerHPText.textContent = playerLife;
 		if (playerLife < 1) {console.log ("You lose! Game Over"); textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
 	}
-	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("inactive-button","control-button2"); 
-	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("inactive-button","control-button");
-	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("inactive-button","control-button");
+	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("pressed-button","control-button2"); 
+	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("pressed-button","control-button");
+	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("pressed-button","control-button");
 	currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 	for (var i = 0; i <= roundCounter; i++) 
 	{
@@ -162,10 +162,10 @@ function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
 	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","inactive-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; nextTurn(); }
+		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
+				attackButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
 				for (x = 0; x < jedi.name.length; x++) {
 					if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
 						var targetDiv = document.getElementById(jedi.name[x]);
@@ -174,7 +174,7 @@ function clickListener(event) {
 				}
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
-			else { attackButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button");
+			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");
 				for (x = 0; x < jedi.name.length; x++) {
 						if (roundCounter >= jedi.attack[x] && jedi.inPlay[x] === true){
 							var targetDiv = document.getElementById(jedi.name[x]);
@@ -184,8 +184,8 @@ function clickListener(event) {
 			}
 		}																					
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
-			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","inactive-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
-			else {abilityButtonClicked = false; clickedValue.classList.replace("inactive-button","control-button"); } 
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
+			else {abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); } 
 		}	
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {	
 			var fighter = {
