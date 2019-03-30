@@ -83,6 +83,7 @@ for (let i = 0; i < fighterNames.length; i++)
 		imageFighter.attr("attack-value", strength);
 		imageFighter.attr("side", currentFighter.side);
 		imageFighter.attr("alt", currentFighter.name);
+		imageFighter.attr("played-during", roundCounter);
 		$("#"+lightSideDarkSide + (strength)).append(imageFighter);
 		fighters[currentFighter.name].inPlay = true;
 	}	
@@ -181,7 +182,7 @@ function clickListener(event) {
 				for (var x = 0; x < fighterNames.length; x++)
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn) {
-					console.log(fighters[fighterNames[x]]);
+					//console.log(fighters[fighterNames[x]]);
 					targetDiv = document.getElementById(fighters[fighterNames[x]].name);
 					//console.log(targetDiv);
 					targetDiv.classList.add("highlighted-fighter");
@@ -212,10 +213,11 @@ function clickListener(event) {
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {	
 			var fighter = {
 				name	:	clickedValue.attributes[1].value,
-				attack	:	clickedValue.attributes[3].value
-			};
+				attack	:	clickedValue.attributes[3].value,
+				playedDuring: clickedValue.attributes[6].value
+			}; console.log(fighter);
 		
-			if (roundCounter > fighter.attack && jedi.hp[fighter.attack] > 0) { //i.e., that means that the fighter has been out for at least one turn, and has positive hit points 
+			if (roundCounter > fighter.playedDuring && !fighters[fighter.name].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
 				var targetedDiv = document.getElementById(fighter.name);
 				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
