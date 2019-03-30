@@ -29,8 +29,9 @@ var textElements = {
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
 var playerLife = 20; textElements.playerHPText.textContent = playerLife;
-var roundCounter = 0; textElements.roundTrackerText.textContent = roundCounter+1;
+var roundCounter = 1; textElements.roundTrackerText.textContent = roundCounter+1;
 
+const playerSide = "jedi";
 
 var attackButtonClicked = false;
 var abilityButtonClicked = false;
@@ -41,16 +42,48 @@ var abilityButtonClicked = false;
 // function selectFighterByName() {} // function takes in an name of a fighter and selects it" by adjusting its margins to move it down and right
 
 
+const fighters = {
+	
+	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false,tapped:false, imagePath:"./assets/images/ObiWanKenobi.jpg"},
+	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/QuiGonJinn.jpg"},
+	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/MaceWindu.jpg"},
+	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Yoda.jpg"},
+	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Anakin.jpg"},
+	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthMaul.jpeg"},
+	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthPlagueis.jpg"},
+	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Palpatine.jpg"},
+	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthVader.jpg"},
+	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthSidious.jpeg"}
+};
 
-function placeFighter(rank, lightSideDarkSide) {
-	if (rank < sith.name.length) { 
+var jedi = {
+	
+	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
+	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/MaceWindu.jpg","./assets/images/Yoda.jpg","./assets/images/Anakin.jpg"],
+	attack	: [1,2,3,4,5],
+	hp		: [1,2,3,4,5],
+	attackedThisTurn	: [false, false, false, false, false],
+	inPlay	: [false, false, false, false, false]
+};
+
+const fighterNames = Object.keys(fighters);
+
+
+function placeFighter(strength, lightSideDarkSide) {
+	var currentFighter;
+for (let i = 0; i < fighterNames.length; i++)
+{
+	if (fighters[fighterNames[i]].rank === strength && fighters[fighterNames[i]].side === lightSideDarkSide) {currentFighter = fighters[fighterNames[i]]; currentFighter.name = fighterNames[i]; break;}
+}
+	if (currentFighter) { 
 		imageFighter = $("<img>");
 		imageFighter.addClass("fighter-image");
-		imageFighter.attr('id', sith.name[rank]);
-		imageFighter.attr("src", sith.imagePath[rank]);
-		imageFighter.attr("attack-value", sith.attack[rank]);
-		imageFighter.attr("alt", sith.name[rank]);
-		$("#"+lightSideDarkSide + (rank+1)).append(imageFighter);
+		imageFighter.attr('id', currentFighter.name);
+		imageFighter.attr("src", currentFighter.imagePath);
+		imageFighter.attr("attack-value", strength);
+		imageFighter.attr("side", currentFighter.side);
+		imageFighter.attr("alt", currentFighter.name);
+		$("#"+lightSideDarkSide + (strength)).append(imageFighter);
 	}	
 }
 
@@ -66,30 +99,6 @@ function placeJedi(index, lightSideDarkSide) {
 		jedi.inPlay[index] = true;
 	}	
 }
-
-var fighter = {
-	
-	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
-	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
-	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
-	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
-	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
-	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false,tapped:false},
-	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false,tapped:false},
-	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false,tapped:false},
-	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false,tapped:false},
-	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false,tapped:false}
-};
-
-var jedi = {
-	
-	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
-	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/MaceWindu.jpg","./assets/images/Yoda.jpg","./assets/images/Anakin.jpg"],
-	attack	: [1,2,3,4,5],
-	hp		: [1,2,3,4,5],
-	attackedThisTurn	: [false, false, false, false, false],
-	inPlay	: [false, false, false, false, false]
-};
 	
 var sith = {
 	name	: ["Darth Maul", "Darth Plagueis", "Chancellor Palpatine", "Darth Vader", "Darth Sidious"],
@@ -102,7 +111,7 @@ var sith = {
  
 
 var gameOver = false;
-placeJedi(roundCounter, "jedi"); 
+placeFighter(roundCounter, "jedi"); 
 
 
 
@@ -154,7 +163,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		var targetDiv = document.getElementById(jedi.name[i]);
 		if (targetDiv) targetDiv.classList.remove("unready");
 	}
-	placeJedi(++roundCounter, "jedi");
+	placeFighter(++roundCounter, "jedi");
 	textElements.roundTrackerText.textContent = roundCounter+1;
 }
 
