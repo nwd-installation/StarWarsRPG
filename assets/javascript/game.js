@@ -29,7 +29,7 @@ var textElements = {
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
 var playerLife = 20; textElements.playerHPText.textContent = playerLife;
-var roundCounter = 1; textElements.roundTrackerText.textContent = roundCounter+1;
+var roundCounter = 1; textElements.roundTrackerText.textContent = roundCounter;
 
 const playerSide = "jedi";
 
@@ -131,12 +131,12 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	placeFighter(roundCounter, "sith");
 	// opponent will attack if able, or use abilities, before next jedi is placed
 	// need to indicate on screen what phase it is
-	if (roundCounter > 0) {
+	if (roundCounter > 1) {
 		var attacking = [];
 		var attackval = 0;
 		var iteratorLimit;
-		if (roundCounter > sith.name.length) iteratorLimit = sith.name.length; // only iterate up to the number of fighters
-		else iteratorLimit = roundCounter;
+		if (roundCounter-1 > sith.name.length) iteratorLimit = sith.name.length; // only iterate up to the number of fighters
+		else iteratorLimit = roundCounter-1;
 		for (var i = 0; i < iteratorLimit; i++) {
 			attacking.push(sith.name[i]);
 			attackval += sith.attack[i];
@@ -164,7 +164,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		if (targetDiv) targetDiv.classList.remove("unready");
 	}
 	placeFighter(++roundCounter, "jedi");
-	textElements.roundTrackerText.textContent = roundCounter+1;
+	textElements.roundTrackerText.textContent = roundCounter;
 }
 
 function clickListener(event) {
