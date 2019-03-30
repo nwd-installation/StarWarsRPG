@@ -210,6 +210,8 @@ function clickListener(event) {
 							var targetDiv = document.getElementById(fighterNames[x]);
 							targetDiv.classList.remove("selected-fighter");
 							targetDiv.classList.remove("highlighted-fighter");
+							targetDiv = document.getElementById("send-button");
+							targetDiv.classList.add("invisible");
 						}
 				}
 			}
