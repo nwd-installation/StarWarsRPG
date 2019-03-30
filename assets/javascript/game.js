@@ -69,16 +69,16 @@ function placeJedi(index, lightSideDarkSide) {
 
 var fighter = {
 	
-	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false},
-	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false},
-	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false},
-	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false},
-	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false},
-	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false},
-	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false},
-	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false},
-	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false},
-	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false}
+	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
+	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
+	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
+	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
+	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false,tapped:false},
+	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false,tapped:false},
+	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false,tapped:false},
+	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false,tapped:false},
+	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false,tapped:false},
+	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false,tapped:false}
 };
 
 var jedi = {
