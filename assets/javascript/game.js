@@ -103,9 +103,6 @@ placeFighter(roundCounter, "jedi");
 
 function nextTurn() { // add argument parameter: side, to be used in the various functions for each phase
 
-//untapPhase(side)
-//upkeepPhase(side)  // note, is this needed?
-//attackphasePhase(side)
 	
 	for (i = 0; i < fighterNames.length; i++) {
 		if (fighters[fighterNames[i]].inPlay) 
