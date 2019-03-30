@@ -10,9 +10,6 @@
 
 //only one attack of x fighters per turn
 
-//classes of fighter img elements will be of the pattern: fighter jedi or fighter sith
-
-//its about time for a refactor
 var attackCadre = [];
 
 var textElements = {
@@ -22,9 +19,6 @@ var textElements = {
 	opponentHPText : document.getElementById("opponent-health"),
 	notificationText : document.getElementById("notifications")
 };  
-
-// sides = ["sith", "jedi"];
-// side = sides[Math.floor(Math.random * 2)]; // to randomize which side goes first. should also add logic for which side player is playing as
 
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
@@ -56,17 +50,6 @@ const fighters = {
 	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthVader.jpg"},
 	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthSidious.jpeg"}
 };
-/*
-var jedi = {
-	
-	name	: ["Obi-Wan Kenobi", "Qui-Gon Jinn", "Mace Windu", "Yoda", "Anakin Skywalker"],
-	imagePath	: ["./assets/images/ObiWanKenobi.jpg","./assets/images/QuiGonJinn.jpg","./assets/images/MaceWindu.jpg","./assets/images/Yoda.jpg","./assets/images/Anakin.jpg"],
-	attack	: [1,2,3,4,5],
-	hp		: [1,2,3,4,5],
-	attackedThisTurn	: [false, false, false, false, false],
-	inPlay	: [false, false, false, false, false]
-};
-*/
 const fighterNames = Object.keys(fighters);
 
 
@@ -131,7 +114,6 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 			if (targetDiv){
 				targetDiv.classList.remove("highlighted-fighter");
 				targetDiv.classList.remove("selected-fighter");
-				//targetDiv.classList.replace("selected-fighter","unready");
 			}
 		}
 	}
@@ -167,10 +149,7 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		fighters[fighterNames[i]].tapped = false;
 		
 	}
-	/*for (i = 0; i < jedi.name.length; i++) {
-		var targetDiv = document.getElementById(jedi.name[i]);
-		if (targetDiv) targetDiv.classList.remove("unready");
-	}*/
+	
 	placeFighter(++roundCounter, "jedi");
 	textElements.roundTrackerText.textContent = roundCounter;
 }
@@ -186,24 +165,14 @@ function clickListener(event) {
 				var alreadyPreset = false;
 				targetDiv = document.getElementById("send-button");
 				if (targetDiv.classList.contains("invisible")) targetDiv.classList.remove("invisible");
-				// ACTIVINE "DONE" BUTTON
-				//var targetDivArray = document.getElementsByClassName("fighter-image");
-				//console.log(targetDivArray);
+				
 				for (var x = 0; x < fighterNames.length; x++)
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn) {
-					//console.log(fighters[fighterNames[x]]);
 					targetDiv = document.getElementById(fighters[fighterNames[x]].name);
-					//console.log(targetDiv);
 					targetDiv.classList.add("highlighted-fighter");
 					}
-				}
-/*				for (x = 0; x < jedi.name.length; x++) {
-					if (roundCounter > jedi.attack[x] && jedi.inPlay[x] === true){
-						var targetDiv = document.getElementById(jedi.name[x]);
-						targetDiv.classList.add("highlighted-fighter");
-					}
-				} */ 
+				} 
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
 			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");  attackCadre = [];
@@ -235,7 +204,7 @@ function clickListener(event) {
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
 			clickedValue.classList.replace("control-button","pressed-button");
 			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
-			else {abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); } 
+			else {abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = ""; } 
 		}	
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {
 			
@@ -251,17 +220,13 @@ function clickListener(event) {
 				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				
 				// add him to the attacking cadre if he is not already in there
-				//opponentLife -= fighter.attack; textElements.opponentHPText.textContent = opponentLife;
-				//jedi.attackedThisTurn[fighter.attack] = true;
 				console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
 				var y = attackCadre.indexOf(fighter);
 				if (y === -1) attackCadre.push(fighter);
-				//console.log("Opponent is now at " + opponentLife + " life."); 
 				if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 			}
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
-			// clickedValue.classList.remove("selected-fighter");
 			console.log("clickedValue is "); console.log(clickedValue);
 			fighter = {
 				name	:	clickedValue.attributes[1].value,
