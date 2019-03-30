@@ -175,7 +175,7 @@ function clickListener(event) {
 				} 
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
-			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");  attackCadre = [];
+			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");  textElements.notificationText.textContent = ""; attackCadre = [];
 				for (x = 0; x < fighterNames.length; x++) {
 						if (roundCounter >= fighters[fighterNames[x]].rank && fighters[fighterNames[x]].inPlay === true){
 							var targetDiv = document.getElementById(fighterNames[x]);
