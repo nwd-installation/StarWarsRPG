@@ -239,16 +239,12 @@ function clickListener(event) {
 	}
 }
 
-//note: need the ability to select / unselect attacking fighters and then a final confirm attack button
-// also, need the ability to select only a single fighter at a time when attempting to use ability, including which fighter or player to target with ability, if there is a target of the ability. and a final confirm use ability button.
+//need blocking functions
+// need the ability to select only a single fighter at a time when attempting to use ability, including which fighter or player to target with ability, if there is a target of the ability. and a final confirm use ability button.
 // need explanatory messages like "you can't attack with that fighter yet, he hasn't been out a full round yet. or, that fighter has no abilities. or, you can't block with that fighter, he attacked or used an ability during your last turn.
-
-
-//these are simplified MtG mechanics. you can only use fighter abilities during your own turn, and it always causes the fighter to become unready just as though he had attacked.
-
+//these are simplified MtG mechanics. you can only use fighter abilities during your own turn, and it always causes the fighter to become unready or "tapped" just as though he had attacked.
 //perhaps a gray overlay of fighter image for those who just came out that turn, to be removed as soon as the turn is over?
-
 //ultimately, it would be nice to develop a visual library to simplify some of the operations I am performing here.
-
+//there is definitely room for more functional encapsulation
 
 document.addEventListener('click', clickListener);
