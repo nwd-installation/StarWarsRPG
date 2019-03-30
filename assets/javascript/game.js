@@ -39,16 +39,16 @@ var sendButtonClicked = false;
 
 const fighters = {
 	
-	"Obi-Wan Kenobi": {rank:1,side:"jedi",justsummoned:true,inPlay:false,tapped:false, imagePath:"./assets/images/ObiWanKenobi.jpg"},
-	"Qui-Gon Jinn": {rank:2,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/QuiGonJinn.jpg"},
-	"Mace Windu": {rank:3,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/MaceWindu.jpg"},
-	"Yoda": {rank:4,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Yoda.jpg"},
-	"Anakin Skywalker": {rank:5,side:"jedi",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Anakin.jpg"},
-	"Darth Maul": {rank:1,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthMaul.jpeg"},
-	"Darth Plagueis": {rank:2,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthPlagueis.jpg"},
-	"Chancellor Palpatine": {rank:3,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/Palpatine.jpg"},
-	"Darth Vader": {rank:4,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthVader.jpg"},
-	"Darth Sidious": {rank:5,side:"sith",justsummoned:true,inPlay:false,tapped:false,imagePath:"./assets/images/DarthSidious.jpeg"}
+	"Obi-Wan Kenobi": {rank:1,side:"jedi",inPlay:false,tapped:false, imagePath:"./assets/images/ObiWanKenobi.jpg"},
+	"Qui-Gon Jinn": {rank:2,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/QuiGonJinn.jpg"},
+	"Mace Windu": {rank:3,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/MaceWindu.jpg"},
+	"Yoda": {rank:4,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/Yoda.jpg"},
+	"Anakin Skywalker": {rank:5,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/Anakin.jpg"},
+	"Darth Maul": {rank:1,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthMaul.jpeg"},
+	"Darth Plagueis": {rank:2,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthPlagueis.jpg"},
+	"Chancellor Palpatine": {rank:3,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/Palpatine.jpg"},
+	"Darth Vader": {rank:4,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthVader.jpg"},
+	"Darth Sidious": {rank:5,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthSidious.jpeg"}
 };
 const fighterNames = Object.keys(fighters);
 
@@ -99,7 +99,7 @@ var sith = {
 var gameOver = false;
 placeFighter(roundCounter, "jedi"); 
 
-
+textElements.notificationText.textContent = "Your turn. Click End Turn because your fighters can't attack or use abilities on the same turn they enter play."
 
 function nextTurn() { // add argument parameter: side, to be used in the various functions for each phase
 
@@ -127,14 +127,11 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 			attacking.push(sith.name[i]);
 			attackval += sith.attack[i];
 		}
-		console.log("Opponent is attacking with:");
-		console.log(attacking);
-		console.log("For a total of " + attackval + " attack points.");
 		//need to implement a blocking mechanic.
-		console.log("Select fighters to block."); textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
+		textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
 		
-		playerLife -= attackval; console.log("Your life points have decreased to " + playerLife); textElements.playerHPText.textContent = playerLife;
-		if (playerLife < 1) {console.log ("You lose! Game Over"); textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
+		playerLife -= attackval; textElements.playerHPText.textContent = playerLife;
+		if (playerLife < 1) { textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
 	}
 	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("pressed-button","control-button2"); 
 	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("pressed-button","control-button");
@@ -199,12 +196,10 @@ function clickListener(event) {
 				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
 			}				
 			opponentLife -= totalAttack; textElements.opponentHPText.textContent = opponentLife;
-			console.log("total attack : " + totalAttack);
-			console.log("Opponent is now at " + opponentLife + " life."); 
 			textElements.notificationText.textContent = "Your fighters did " + totalAttack + " damage to opponent, bringing him to " + opponentLife + " life.";
 			attackCadre = [];
 			// replace highlighted with tapped indicator
-			if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
+			if (opponentLife < 1) { textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 		}
 				
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === sendButtonClicked) {
@@ -218,7 +213,7 @@ function clickListener(event) {
 				name	:	clickedValue.attributes[1].value,
 				attack	:	clickedValue.attributes[3].value,
 				playedDuring: clickedValue.attributes[6].value
-			}; console.log(fighter);
+			}; 
 		
 			if (roundCounter > clickedValue.attributes[6].value && !fighters[clickedValue.attributes[1].value].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
 				
@@ -226,21 +221,19 @@ function clickListener(event) {
 				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				
 				// add him to the attacking cadre if he is not already in there
-				console.log (fighter.name + " deals " + fighter.attack + " damage.") ;
 				var y = attackCadre.indexOf(fighter);
 				if (y === -1) attackCadre.push(fighter);
-				if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
+				if (opponentLife < 1) { textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 			}
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && attackButtonClicked === true) {
-			console.log("clickedValue is "); console.log(clickedValue);
 			fighter = {
 				name	:	clickedValue.attributes[1].value,
 				attack	:	clickedValue.attributes[3].value,
 				playedDuring: clickedValue.attributes[6].value
-			}; console.log("fighter is "); console.log(fighter);
+			};
 			for (var z = 0 ; z < attackCadre.length; z++) {
-				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1);  console.log(attackCadre);
+				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1);
 			}
 			clickedValue.classList.remove("selected-fighter");			
 		}
