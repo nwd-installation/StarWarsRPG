@@ -180,10 +180,10 @@ function clickListener(event) {
 		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false) {
 			if (attackButtonClicked === false) {
-				attackButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
+				attackButtonClicked = true; attackCadre = []; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
 				var alreadyPreset = false;
 				targetDiv = document.getElementById("send-button");
-				targetDiv.classList.remove("invisible");
+				if (targetDiv.classList.contains("invisible")) targetDiv.classList.remove("invisible");
 				// ACTIVINE "DONE" BUTTON
 				//var targetDivArray = document.getElementsByClassName("fighter-image");
 				//console.log(targetDivArray);
@@ -204,14 +204,14 @@ function clickListener(event) {
 				} */ 
 			}
 				//highlight all fighters able to attack. if they get clicked, add them to the attacking party. if they get unclicked, remove them.
-			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");
+			else { attackButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button");  attackCadre = [];
 				for (x = 0; x < fighterNames.length; x++) {
 						if (roundCounter >= fighters[fighterNames[x]].rank && fighters[fighterNames[x]].inPlay === true){
 							var targetDiv = document.getElementById(fighterNames[x]);
 							targetDiv.classList.remove("selected-fighter");
 							targetDiv.classList.remove("highlighted-fighter");
 							targetDiv = document.getElementById("send-button");
-							targetDiv.classList.add("invisible");
+							if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
 						}
 				}
 			}
