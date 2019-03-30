@@ -195,11 +195,12 @@ function clickListener(event) {
 			opponentLife -= totalAttack; textElements.opponentHPText.textContent = opponentLife;
 			console.log("total attack : " + totalAttack);
 			console.log("Opponent is now at " + opponentLife + " life."); 
+			textElements.notificationText.textContent = "Your fighters did " + totalAttack + " damage to opponent, bringing him to " + opponentLife + " life.";
 			attackCadre = [];
 			if (opponentLife < 1) { console.log("You won! Game Over"); textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 		}
 				
-		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === false) {
+		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === sendButtonClicked) {
 			clickedValue.classList.replace("control-button","pressed-button");
 			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
 			else {abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = ""; } 
