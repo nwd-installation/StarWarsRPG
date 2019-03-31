@@ -1,26 +1,15 @@
+@font-face {
+    font-family: "My Custom Font";
+    src: url(UniversBlack.ttf);
+}
+
 body {
-	background-color: #b8c6f5; /* need a cool background image */
+	background-image: url("../images/ce-starfield-background-1.jpg");
 }
 
-/* 
-.jedi-image {
-	border: 3px;
-	border-color: black;
-	border-style: solid;
-	width: 150px;
-	height: 150px;
-	/* margin: 5px 5px; 
+.col {
+	color: lightgray;
 }
-
-.sith-image {
-	border: 3px;
-	border-color: black;
-	border-style: solid;
-	width: 150px;
-	height: 150px;
-	/* margin: 0 5px;  
-}
-*/
 
 .fighter-image {
 	border: 4px;
@@ -31,15 +20,19 @@ body {
 	margin: 5px 5px;
 }
 
+.h1 {
+	font-family: "My Custom Font",'Roboto', sans-serif;
+	font-weight: bolder;
+}
+
 .jumbotron {
 	text-align: center;
 	padding: 3rem 2rem;
 	margin-bottom: 1rem;
+	color: yellow;
+    background-color: transparent;
 }
 
-.fighter-row {
-	/* height: 180px; */
-}
 
 .text-dec {
 	height: 100%;
