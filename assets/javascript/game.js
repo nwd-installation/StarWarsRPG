@@ -73,27 +73,18 @@ for (let i = 0; i < fighterNames.length; i++)
 		imageFighter.attr("side", currentFighter.side);
 		imageFighter.attr("alt", currentFighter.name);
 		imageFighter.attr("played-during", roundCounter);
+		fighters[currentFighter.name].playedDuring = roundCounter;
 		$("#"+lightSideDarkSide + (strength)).append(imageFighter);
 		fighters[currentFighter.name].inPlay = true;
 	}	
 }
-	
-var sith = {
-	name	: ["Darth Maul", "Darth Plagueis", "Chancellor Palpatine", "Darth Vader", "Darth Sidious"],
-	imagePath	: ["./assets/images/DarthMaul.jpeg","./assets/images/DarthPlagueis.jpg","./assets/images/Palpatine.jpg","./assets/images/DarthVader.jpg","./assets/images/DarthSidious.jpeg"],
-	attack	: [1,2,3,4,5],
-	hp		: [1,2,3,4,5],
-	attackedThisTurn	: [false, false, false, false, false],
-	inPlay	: [false, false, false, false, false]
-};
- 
 
 var gameOver = false;
 placeFighter(roundCounter, "jedi"); 
 
 textElements.notificationText.textContent = "Your turn. Click End Turn because your fighters can't attack or use abilities on the same turn they enter play."
 
-function nextTurn() { // add argument parameter: side, to be used in the various functions for each phase
+function nextTurn() { // add parameter: side, to be used in the various functions for each phase
 
 	
 	for (i = 0; i < fighterNames.length; i++) {
@@ -112,13 +103,11 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	if (roundCounter > 1) {
 		var attacking = [];
 		var attackval = 0;
-		var iteratorLimit;
-		if (roundCounter-1 > sith.name.length) iteratorLimit = sith.name.length; // only iterate up to the number of fighters
-		else iteratorLimit = roundCounter-1;
-		for (var i = 0; i < iteratorLimit; i++) {
-			attacking.push(sith.name[i]);
-			attackval += sith.attack[i];
-		}
+		var iteratorLimit = fighterNames.length;
+		attacking = fighterNames.filter(x => fighters[x].inPlay && fighters[x].side === "sith" && !fighters[x].tapped && fighters[x].playedDuring < roundCounter);
+		for (var i = 0; i < attacking.length; i++) {
+			attackval += fighters[attacking[i]].rank;
+		} 
 		//need to implement a blocking mechanic.
 		textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
 		
