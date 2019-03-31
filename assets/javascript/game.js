@@ -11,6 +11,8 @@
 
 var attackCadre = [];
 
+var forceUser = {};
+
 var textElements = {
 	turnTrackerText : document.getElementById("turn-tracker"),
 	roundTrackerText : document.getElementById("round-tracker"),
@@ -141,15 +143,15 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("pressed-button","control-button");
 	sendButtonClicked = false; targetDiv = document.getElementById("send-button"); targetDiv.classList.replace("pressed-button","control-button");
 	if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
-	currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
-	for (var i = 0; i < fighterNames.length; i++) 
-	{
-		fighters[fighterNames[i]].tapped = false;
-		targetDiv = document.getElementById(fighterNames[i]);
-		if (targetDiv) targetDiv.classList.remove("tapped-fighter");
+if (!gameOver){
+		currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
+		for (var i = 0; i < fighterNames.length; i++) 
+		{
+			fighters[fighterNames[i]].tapped = false;
+			targetDiv = document.getElementById(fighterNames[i]);
+			if (targetDiv) targetDiv.classList.remove("tapped-fighter");
 		
-	}
-	if (!gameOver){
+		}
 		placeFighter(++roundCounter, "jedi");
 		textElements.roundTrackerText.textContent = roundCounter;
 		textElements.notificationText.textContent = "Your turn. You may 'Attack' or 'Use Abilities'."
@@ -160,8 +162,8 @@ function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
 	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn") { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; textElements.notificationText.textContent = ""; nextTurn(); }
-		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false && sendButtonClicked === false) {
+		if (clickedValue.attributes[0].value === "next-turn" && !targetedAbility) { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; textElements.notificationText.textContent = ""; nextTurn(); }
+		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false && sendButtonClicked === false && !targetedAbility) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; attackCadre = []; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
 				var alreadyPreset = false;
@@ -224,12 +226,15 @@ function clickListener(event) {
 				}
 			}
 			else {
-				abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = "";
+				abilityButtonClicked = false; targetedAbility = 0; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = "";
 				for (var x = 0; x < fighterNames.length; x++)
 				{
-					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped && fighters[clickedValue.attributes[1].value].ability > 0) {
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped && fighters[fighterNames[x]].ability > 0) {
 						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
 						if (targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.remove("highlighted-fighter");
+						targetDiv = document.getElementById(forceUser.name);
+						if (targetDiv.classList.contains("selected-fighter")) targetDiv.classList.remove("selected-fighter"); 
+						forceUser = {};
 					}
 				}
 			} 
@@ -247,30 +252,34 @@ function clickListener(event) {
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && abilityButtonClicked === true && targetedAbility===0) {
 		
-		var forceUser = {
+		forceUser = {
 				name	:	clickedValue.attributes[1].value,
 				ability 	:	fighters[clickedValue.attributes[1].value].ability,
 				playedDuring: clickedValue.attributes[6].value
-			}; console.log(forceUser);
-			//execute ability and tap fighter
+			};
+			//execute ability, but don't tap forceUser until completed
 			if (forceUser.ability === 1) { 
 				textElements.notificationText.textContent = "Select ability target." ;
 				targetedAbility = 1;
 				if (clickedValue.attributes[0].value === "fighter-image tapped-fighter" && abilityButtonClicked === true)
 				fighters[clickedValue.attributes[1].value].tapped = true;
-				var targetDiv = document.getElementById(clickedValue.attributes[1].value);
-				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator	
+				//var targetDiv = document.getElementById(clickedValue.attributes[1].value);
+				//targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator	
 			}
 		}
 		else if (clickedValue.attributes[0].value.includes("fighter-image") && abilityButtonClicked === true && targetedAbility > 0) {
 			if (targetedAbility === 1) {
-				if (clickedValue.attributes[0].value.includes("tapped-fighter")) {
+				if (clickedValue.attributes[0].value.includes("tapped-fighter") && clickedValue.attributes[1].value !== forceUser.name) {
 					var targetDiv = document.getElementById(clickedValue.attributes[1].value);
 					targetDiv.setAttribute("class", "fighter-image");
 					targetedAbility = 0;
+					var targetDiv = document.getElementById(forceUser.name);
+					targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
+					fighters[forceUser.name].tapped = true;
+					forceUser = {};
 					textElements.notificationText.textContent = "";
 				}
-				else textElements.notificationText.textContent = "Not a tapped fighter you control. Select target.";
+				else textElements.notificationText.textContent = "Not a valid target. Select target.";
 			}
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {
