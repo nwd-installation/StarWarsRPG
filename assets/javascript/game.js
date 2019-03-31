@@ -21,7 +21,7 @@ var textElements = {
 	notificationText : document.getElementById("notifications")
 };
 
-var abilities = [["none", 0], ["Untap target fighter you control.", 1]] // second value in pair is targeted ability? true / false
+var abilities = [["none", false], ["Untap target fighter you control.", true]] // second value in pair is boolean: targeted ability?
 
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
@@ -97,7 +97,10 @@ function nextTurn() { // add parameter: side, to be used in the various function
 			}
 		}
 	}
-	placeFighter(roundCounter, "sith");
+	if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) {
+		textElements.notificationText.textContent = "Summoning fighter";
+		placeFighter(roundCounter, "sith");
+	}
 	// opponent will attack if able, or use abilities, before next jedi is placed
 	// need to indicate on screen what phase it is
 	if (roundCounter > 1) {
@@ -114,12 +117,12 @@ function nextTurn() { // add parameter: side, to be used in the various function
 		playerLife -= attackval; textElements.playerHPText.textContent = playerLife;
 		if (playerLife < 1) { textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
 	}
-	targetDiv = document.getElementById("next-turn"); targetDiv.classList.replace("pressed-button","control-button2"); 
-	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); targetDiv.classList.replace("pressed-button","control-button");
-	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); targetDiv.classList.replace("pressed-button","control-button");
-	sendButtonClicked = false; targetDiv = document.getElementById("send-button"); targetDiv.classList.replace("pressed-button","control-button");
-	if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
+	targetDiv = document.getElementById("next-turn"); if (targetDiv) targetDiv.classList.replace("pressed-button","control-button2"); 
+	attackButtonClicked = false; targetDiv = document.getElementById("attack-button"); if (targetDiv) targetDiv.classList.replace("pressed-button","control-button");
+	abilityButtonClicked = false; targetDiv = document.getElementById("ability-button"); if (targetDiv) targetDiv.classList.replace("pressed-button","control-button");
+	sendButtonClicked = false; targetDiv = document.getElementById("send-button"); if (targetDiv) { targetDiv.classList.replace("pressed-button","control-button"); if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible"); }
 if (!gameOver){
+		textElements.notificationText.textContent = "Your Turn.";
 		currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 		for (var i = 0; i < fighterNames.length; i++) 
 		{
@@ -128,8 +131,11 @@ if (!gameOver){
 			if (targetDiv) targetDiv.classList.remove("tapped-fighter");
 		
 		}
-		placeFighter(++roundCounter, "jedi");
-		textElements.roundTrackerText.textContent = roundCounter;
+		if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) {
+			textElements.notificationText.textContent = "Summoning fighter";
+			placeFighter(++roundCounter, "jedi");
+			textElements.roundTrackerText.textContent = roundCounter;
+			}
 		textElements.notificationText.textContent = "Your turn. You may 'Attack' or 'Use Abilities'."
 	}
 }
@@ -138,7 +144,7 @@ function clickListener(event) {
 	if (gameOver) {document.removeEventListener('click', clickListener); return; }
 	var clickedValue = event.target;
 	if (clickedValue.attributes[0]) {
-		if (clickedValue.attributes[0].value === "next-turn" && !targetedAbility) { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; textElements.notificationText.textContent = ""; nextTurn(); }
+		if (clickedValue.attributes[0].value === "next-turn" && !targetedAbility) { clickedValue.classList.replace("control-button2","pressed-button");  currentSideTurn = "sith"; textElements.turnTrackerText.textContent = currentSideTurn; attackCadre = []; textElements.notificationText.textContent = "Opponent's Turn"; nextTurn(); }
 		else if (clickedValue.attributes[0].value === "attack-button" && abilityButtonClicked === false && sendButtonClicked === false && !targetedAbility) {
 			if (attackButtonClicked === false) {
 				attackButtonClicked = true; attackCadre = []; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter(s) to attack opponent with";
@@ -159,10 +165,10 @@ function clickListener(event) {
 				for (x = 0; x < fighterNames.length; x++) {
 						if (roundCounter >= fighters[fighterNames[x]].rank && fighters[fighterNames[x]].inPlay === true && fighters[fighterNames[x]].tapped === false){
 							var targetDiv = document.getElementById(fighterNames[x]);
-							targetDiv.classList.remove("selected-fighter");
-							targetDiv.classList.remove("highlighted-fighter");
+							if (targetDiv) { targetDiv.classList.remove("selected-fighter");
+							targetDiv.classList.remove("highlighted-fighter");}
 							targetDiv = document.getElementById("send-button");
-							if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
+							if (targetDiv) {if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible"); }
 						}
 				}
 			}
@@ -175,7 +181,7 @@ function clickListener(event) {
 				totalAttack += parseInt(attackCadre[x].attack);
 				fighters[attackCadre[x].name].tapped = true;
 				var targetDiv = document.getElementById(attackCadre[x].name);
-				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator
+				if (targetDiv) targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator
 			}				
 			opponentLife -= totalAttack; textElements.opponentHPText.textContent = opponentLife;
 			textElements.notificationText.textContent = "Your fighters did " + totalAttack + " damage to opponent, bringing him to " + opponentLife + " life.";
@@ -197,7 +203,7 @@ function clickListener(event) {
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].ability > 0 && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
 						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
-						if (!targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.add("highlighted-fighter");
+						if (targetDiv) { if (!targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.add("highlighted-fighter"); }
 					}
 				}
 			}
@@ -207,9 +213,9 @@ function clickListener(event) {
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped && fighters[fighterNames[x]].ability > 0) {
 						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
-						if (targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.remove("highlighted-fighter");
+						if (targetDiv) { if (targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.remove("highlighted-fighter"); }
 						targetDiv = document.getElementById(forceUser.name);
-						if (targetDiv.classList.contains("selected-fighter")) targetDiv.classList.remove("selected-fighter"); 
+						if (targetDiv) {if (targetDiv.classList.contains("selected-fighter")) targetDiv.classList.remove("selected-fighter"); }
 						forceUser = {};
 					}
 				}
@@ -218,9 +224,15 @@ function clickListener(event) {
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && abilityButtonClicked === true && fighters[clickedValue.attributes[1].value].ability > 0) {
 		
 			if (roundCounter > clickedValue.attributes[6].value && !fighters[clickedValue.attributes[1].value].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
+			
+			forceUser = {
+				name	:	clickedValue.attributes[1].value,
+				ability 	:	fighters[clickedValue.attributes[1].value].ability,
+				playedDuring: clickedValue.attributes[6].value
+			};
 				
-				var targetedDiv = document.getElementById(clickedValue.attributes[1].value);
-				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
+				var targetDiv = document.getElementById(forceUser.name);
+				if (targetDiv) targetDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				
 				// put ability in notification area and ask for confirmation by clicking fighter again
 				textElements.notificationText.textContent = abilities[fighters[clickedValue.attributes[1].value].ability][0] + " Click force user again to activate.";
@@ -243,16 +255,16 @@ function clickListener(event) {
 			if (targetedAbility === 1) {
 				if (clickedValue.attributes[0].value.includes("tapped-fighter") && clickedValue.attributes[1].value !== forceUser.name) {
 					var targetDiv = document.getElementById(clickedValue.attributes[1].value);
-					targetDiv.setAttribute("class", "fighter-image");
+					if (targetDiv) targetDiv.setAttribute("class", "fighter-image");
 					targetedAbility = 0;
 					var targetDiv = document.getElementById(forceUser.name);
-					targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
+					if (targetDiv) targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
 					fighters[forceUser.name].tapped = true;
 					forceUser = {};
 					textElements.notificationText.textContent = "";
 					abilityButtonClicked = false;
 					var targetDiv = document.getElementById("ability-button");
-					targetDiv.classList.replace("pressed-button","control-button");
+					if (targetDiv) targetDiv.classList.replace("pressed-button","control-button");
 				}
 				else textElements.notificationText.textContent = "Not a valid target. Select target.";
 			}
@@ -267,8 +279,8 @@ function clickListener(event) {
 		
 			if (roundCounter > clickedValue.attributes[6].value && !fighters[clickedValue.attributes[1].value].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
 				
-				var targetedDiv = document.getElementById(clickedValue.attributes[1].value);
-				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
+				var targetDiv = document.getElementById(clickedValue.attributes[1].value);
+				if (targetDiv) targetDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				
 				// add him to the attacking cadre if he is not already in there
 				var y = attackCadre.indexOf(fighter);
