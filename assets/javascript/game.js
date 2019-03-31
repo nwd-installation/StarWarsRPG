@@ -207,7 +207,6 @@ function clickListener(event) {
 				}
 			if (opponentLife < 1) { textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 		}
-				
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === sendButtonClicked) {
 			clickedValue.classList.replace("control-button","pressed-button");
 			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
@@ -230,6 +229,35 @@ function clickListener(event) {
 				}
 			} 
 		}	
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && abilityButtonClicked === true) {
+			
+			var forceUser = {
+				name	:	clickedValue.attributes[1].value,
+				// ability 	:	fighters[clickedValue.attributes[1].value].ability,
+				playedDuring: clickedValue.attributes[6].value
+			}; 
+		
+			if (roundCounter > clickedValue.attributes[6].value && !fighters[clickedValue.attributes[1].value].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
+				
+				var targetedDiv = document.getElementById(clickedValue.attributes[1].value);
+				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
+				
+				// put ability in notification area and ask for confirmation by clicking fighter again
+			}
+		}
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && abilityButtonClicked === true) {
+			//execute ability and tap fighter
+			if (fighters[clickedValue.attributes[1].value].ability) {
+				fighters[clickedValue.attributes[1].value].tapped = true;
+				var targetDiv = document.getElementById(clickedValue.attributes[1].value);
+				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator	
+			}
+		}
+		
+		
+		
+		
+		
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {
 			
 			var fighter = {
