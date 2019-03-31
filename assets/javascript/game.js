@@ -19,7 +19,7 @@ var textElements = {
 	notificationText : document.getElementById("notifications")
 };
 
-var abilities = [["none", 0], ["Untap target fighter you control.", 1]]
+var abilities = [["none", 0], ["Untap target fighter you control.", 1]] // second value in pair is targeted ability? true / false
 
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
