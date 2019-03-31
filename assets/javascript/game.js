@@ -165,7 +165,7 @@ function clickListener(event) {
 				
 				for (var x = 0; x < fighterNames.length; x++)
 				{
-					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn) {
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
 					targetDiv = document.getElementById(fighters[fighterNames[x]].name);
 					if (!targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.add("highlighted-fighter");
 					}
@@ -192,19 +192,43 @@ function clickListener(event) {
 				totalAttack += parseInt(attackCadre[x].attack);
 				fighters[attackCadre[x].name].tapped = true;
 				var targetDiv = document.getElementById(attackCadre[x].name);
-				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter");
+				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator
 			}				
 			opponentLife -= totalAttack; textElements.opponentHPText.textContent = opponentLife;
 			textElements.notificationText.textContent = "Your fighters did " + totalAttack + " damage to opponent, bringing him to " + opponentLife + " life.";
 			attackCadre = [];
-			// replace highlighted with tapped indicator
+			// remove highlighted indicators
+			for (var x = 0; x < fighterNames.length; x++)
+				{
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
+						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
+						if (targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.remove("highlighted-fighter");
+					}
+				}
 			if (opponentLife < 1) { textElements.notificationText.textContent = "You won! Game Over"; gameOver = true;}
 		}
 				
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === sendButtonClicked) {
 			clickedValue.classList.replace("control-button","pressed-button");
-			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; } //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
-			else {abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = ""; } 
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
+				for (var x = 0; x < fighterNames.length; x++)
+				{
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
+						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
+						if (!targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.add("highlighted-fighter");
+					}
+				}
+			}
+			else {
+				abilityButtonClicked = false; clickedValue.classList.replace("pressed-button","control-button"); textElements.notificationText.textContent = "";
+				for (var x = 0; x < fighterNames.length; x++)
+				{
+					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
+						targetDiv = document.getElementById(fighters[fighterNames[x]].name);
+						if (targetDiv.classList.contains("highlighted-fighter")) targetDiv.classList.remove("highlighted-fighter");
+					}
+				}
+			} 
 		}	
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {
 			
@@ -232,7 +256,7 @@ function clickListener(event) {
 				playedDuring: clickedValue.attributes[6].value
 			};
 			for (var z = 0 ; z < attackCadre.length; z++) {
-				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1);
+				if (fighter.name === attackCadre[z].name) attackCadre.splice(z,1); //remove him from attack cadre
 			}
 			clickedValue.classList.remove("selected-fighter");			
 		}
