@@ -77,19 +77,6 @@ for (let i = 0; i < fighterNames.length; i++)
 		fighters[currentFighter.name].inPlay = true;
 	}	
 }
-
-function placeJedi(index, lightSideDarkSide) {
-	if (index < jedi.name.length) {
-		var imageFighter = $("<img>");
-		imageFighter.addClass("fighter-image");
-		imageFighter.attr('id', jedi.name[index]);
-		imageFighter.attr("src", jedi.imagePath[index]);
-		imageFighter.attr("attack-value", jedi.attack[index]);
-		imageFighter.attr("alt", jedi.name[index]);
-		$("#"+lightSideDarkSide + (index+1)).append(imageFighter);
-		jedi.inPlay[index] = true;
-	}	
-}
 	
 var sith = {
 	name	: ["Darth Maul", "Darth Plagueis", "Chancellor Palpatine", "Darth Vader", "Darth Sidious"],
@@ -216,7 +203,7 @@ function clickListener(event) {
 		}
 		else if (clickedValue.attributes[0].value === "ability-button" && attackButtonClicked === sendButtonClicked) {
 			clickedValue.classList.replace("control-button","pressed-button");
-			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; //highlight all fighters able to use an ability. if they get clicked, select the fighter, then ask for target if applicable, then ask to confirm. if they get unclicked, remove him from selected fighter
+			if(!abilityButtonClicked) { abilityButtonClicked = true; clickedValue.classList.replace("control-button","pressed-button"); textElements.notificationText.textContent = "Select fighter to use ability"; //highlight all fighters able to use an ability.
 				for (var x = 0; x < fighterNames.length; x++)
 				{
 					if (fighters[fighterNames[x]].inPlay && fighters[fighterNames[x]].ability > 0 && fighters[fighterNames[x]].rank < roundCounter && fighters[fighterNames[x]].side === currentSideTurn && !fighters[fighterNames[x]].tapped) {
@@ -260,11 +247,7 @@ function clickListener(event) {
 			//execute ability, but don't tap forceUser until completed
 			if (forceUser.ability === 1) { 
 				textElements.notificationText.textContent = "Select ability target." ;
-				targetedAbility = 1;
-				if (clickedValue.attributes[0].value === "fighter-image tapped-fighter" && abilityButtonClicked === true)
-				fighters[clickedValue.attributes[1].value].tapped = true;
-				//var targetDiv = document.getElementById(clickedValue.attributes[1].value);
-				//targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator	
+				targetedAbility = 1;	
 			}
 		}
 		else if (clickedValue.attributes[0].value.includes("fighter-image") && abilityButtonClicked === true && targetedAbility > 0) {
@@ -278,6 +261,9 @@ function clickListener(event) {
 					fighters[forceUser.name].tapped = true;
 					forceUser = {};
 					textElements.notificationText.textContent = "";
+					abilityButtonClicked = false;
+					var targetDiv = document.getElementById("ability-button");
+					targetDiv.classList.replace("pressed-button","control-button");
 				}
 				else textElements.notificationText.textContent = "Not a valid target. Select target.";
 			}
