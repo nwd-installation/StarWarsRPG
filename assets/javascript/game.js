@@ -26,6 +26,8 @@ var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
 var playerLife = 20; textElements.playerHPText.textContent = playerLife;
 var roundCounter = 1; textElements.roundTrackerText.textContent = roundCounter;
 
+var targetedAbility = 0;
+
 const playerSide = "jedi";
 
 var attackButtonClicked = false;
@@ -147,10 +149,11 @@ function nextTurn() { // add argument parameter: side, to be used in the various
 		if (targetDiv) targetDiv.classList.remove("tapped-fighter");
 		
 	}
-	
-	placeFighter(++roundCounter, "jedi");
-	textElements.roundTrackerText.textContent = roundCounter;
-	textElements.notificationText.textContent = "Your turn. You may 'Attack' or 'Use Abilities'."
+	if (!gameOver){
+		placeFighter(++roundCounter, "jedi");
+		textElements.roundTrackerText.textContent = roundCounter;
+		textElements.notificationText.textContent = "Your turn. You may 'Attack' or 'Use Abilities'."
+	}
 }
 
 function clickListener(event) {
@@ -232,12 +235,6 @@ function clickListener(event) {
 			} 
 		}	
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && abilityButtonClicked === true && fighters[clickedValue.attributes[1].value].ability > 0) {
-			
-			var forceUser = {
-				name	:	clickedValue.attributes[1].value,
-				ability 	:	fighters[clickedValue.attributes[1].value].ability[1],
-				playedDuring: clickedValue.attributes[6].value
-			}; 
 		
 			if (roundCounter > clickedValue.attributes[6].value && !fighters[clickedValue.attributes[1].value].tapped) { //i.e., that means that the fighter has been out for at least one turn, and is not tapped
 				
@@ -248,13 +245,32 @@ function clickListener(event) {
 				textElements.notificationText.textContent = abilities[fighters[clickedValue.attributes[1].value].ability][0] + " Click force user again to activate.";
 			}
 		}
-		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && abilityButtonClicked === true) {
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && abilityButtonClicked === true && targetedAbility===0) {
+		
+		var forceUser = {
+				name	:	clickedValue.attributes[1].value,
+				ability 	:	fighters[clickedValue.attributes[1].value].ability,
+				playedDuring: clickedValue.attributes[6].value
+			}; console.log(forceUser);
 			//execute ability and tap fighter
-			if (fighters[clickedValue.attributes[1].value].ability === 1) {
+			if (forceUser.ability === 1) { 
 				textElements.notificationText.textContent = "Select ability target." ;
+				targetedAbility = 1;
+				if (clickedValue.attributes[0].value === "fighter-image tapped-fighter" && abilityButtonClicked === true)
 				fighters[clickedValue.attributes[1].value].tapped = true;
 				var targetDiv = document.getElementById(clickedValue.attributes[1].value);
 				targetDiv.classList.replace("highlighted-fighter", "tapped-fighter"); // replace highlighted with tapped indicator	
+			}
+		}
+		else if (clickedValue.attributes[0].value.includes("fighter-image") && abilityButtonClicked === true && targetedAbility > 0) {
+			if (targetedAbility === 1) {
+				if (clickedValue.attributes[0].value.includes("tapped-fighter")) {
+					var targetDiv = document.getElementById(clickedValue.attributes[1].value);
+					targetDiv.setAttribute("class", "fighter-image");
+					targetedAbility = 0;
+					textElements.notificationText.textContent = "";
+				}
+				else textElements.notificationText.textContent = "Not a tapped fighter you control. Select target.";
 			}
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && attackButtonClicked === true) {
