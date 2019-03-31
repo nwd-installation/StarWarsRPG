@@ -19,7 +19,7 @@ var textElements = {
 	notificationText : document.getElementById("notifications")
 };
 
-var abilities = ["none", "Untap target fighter you control."]
+var abilities = [["none", 0], ["Untap target fighter you control.", 1]]
 
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
@@ -231,11 +231,11 @@ function clickListener(event) {
 				}
 			} 
 		}	
-		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && abilityButtonClicked === true && fighters[clickedValue.attributes[1].value].ability) {
+		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter" && abilityButtonClicked === true && fighters[clickedValue.attributes[1].value].ability > 0) {
 			
 			var forceUser = {
 				name	:	clickedValue.attributes[1].value,
-				ability 	:	fighters[clickedValue.attributes[1].value].ability,
+				ability 	:	fighters[clickedValue.attributes[1].value].ability[1],
 				playedDuring: clickedValue.attributes[6].value
 			}; 
 		
@@ -245,12 +245,12 @@ function clickListener(event) {
 				targetedDiv.setAttribute("class", "fighter-image highlighted-fighter selected-fighter");
 				
 				// put ability in notification area and ask for confirmation by clicking fighter again
-				textElements.notificationText.textContent = abilities[fighters[clickedValue.attributes[1].value].ability] + " Click force user again to activate.";
+				textElements.notificationText.textContent = abilities[fighters[clickedValue.attributes[1].value].ability][0] + " Click force user again to activate.";
 			}
 		}
 		else if (clickedValue.attributes[0].value === "fighter-image highlighted-fighter selected-fighter" && abilityButtonClicked === true) {
 			//execute ability and tap fighter
-			if (fighters[clickedValue.attributes[1].value].ability) {
+			if (fighters[clickedValue.attributes[1].value].ability === 1) {
 				textElements.notificationText.textContent = "Select ability target." ;
 				fighters[clickedValue.attributes[1].value].tapped = true;
 				var targetDiv = document.getElementById(clickedValue.attributes[1].value);
