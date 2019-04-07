@@ -2,16 +2,31 @@
 //game should inform player: your turn. Click "Attack to select attackers or click use ability to use a fighter's abilities"
 //note: a fighter may not attack or use abilities until he has been out for one full round, although he can defend ("block")
 //continued: if the fighter attacked or used abilities during a player's last turn, that fighter is "tapped" and may not block or use abilities until the player's next turn
-
 // note: once the blocking functionality is added, then I will need to add logic to allow the attacking player to decide how the damage gets spread out. or, just let the strongest absorb it first in order to simplify it. not sure yet about trample mechanics. i.e., should excess damage carry over to player? also, should attackers receive damage from their combatants (the blockers) as well as the blockers from the attackers?
-
 //to automate the defense as much as possible, all damage points done to blockers will be divided evenly by applying them one point at a time to the blocking defenders, starting with the strongest blocker, and in descending order of hp.
-
 //only one attack of x fighters per turn
+//need blocking functions
+// need explanatory messages like "you can't attack with that fighter yet, he hasn't been out a full round yet. or, that fighter has no abilities. or, you can't block with that fighter, he attacked or used an ability during your last turn.
+//these are simplified MtG mechanics. you can only use fighter abilities during your own turn, and it always causes the fighter to become unready or "tapped" just as though he had attacked.
+//perhaps a gray overlay of fighter image for those who just came out that turn, to be removed as soon as the turn is over?
+//ultimately, it would be nice to develop a visual library to simplify some of the operations I am performing here.
+//there is definitely room for more functional encapsulation
+
+// function highlightFighterByElement() {} // function takes in an element of a fighter and colors its border in the indicated color
+// function highlightFighterByName() {} // function takes in an name of a fighter and colors its border in the indicated color
+// function selectFighterByElement() {} // function takes in an element of a fighter and "selects it" by adjusting its margins to move it down and right
+// function selectFighterByName() {} // function takes in an name of a fighter and selects it" by adjusting its margins to move it down and right
 
 var attackCadre = [];
-
 var forceUser = {};
+var targetedAbility = 0;
+const playerSide = "jedi";
+var attackButtonClicked = false;
+var abilityButtonClicked = false;
+var sendButtonClicked = false;
+var gameOver = false;
+
+var abilities = [["none", false], ["Untap target fighter you control.", true]] // second value in pair is boolean: targeted ability?
 
 var textElements = {
 	turnTrackerText : document.getElementById("turn-tracker"),
@@ -21,26 +36,10 @@ var textElements = {
 	notificationText : document.getElementById("notifications")
 };
 
-var abilities = [["none", false], ["Untap target fighter you control.", true]] // second value in pair is boolean: targeted ability?
-
 var currentSideTurn = "jedi"; textElements.turnTrackerText.textContent = currentSideTurn;
 var opponentLife = 20; textElements.opponentHPText.textContent = opponentLife;
 var playerLife = 20; textElements.playerHPText.textContent = playerLife;
 var roundCounter = 1; textElements.roundTrackerText.textContent = roundCounter;
-
-var targetedAbility = 0;
-
-const playerSide = "jedi";
-
-var attackButtonClicked = false;
-var abilityButtonClicked = false;
-var sendButtonClicked = false;
-
-// function highlightFighterByElement() {} // function takes in an element of a fighter and colors its border in the indicated color
-// function highlightFighterByName() {} // function takes in an name of a fighter and colors its border in the indicated color
-// function selectFighterByElement() {} // function takes in an element of a fighter and "selects it" by adjusting its margins to move it down and right
-// function selectFighterByName() {} // function takes in an name of a fighter and selects it" by adjusting its margins to move it down and right
-
 
 const fighters = {
 	
@@ -55,15 +54,14 @@ const fighters = {
 	"Darth Vader"			: {rank:4,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthVader.jpg"},
 	"Darth Sidious"			: {rank:5,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthSidious.jpeg"}
 };
-const fighterNames = Object.keys(fighters);
 
+const fighterNames = Object.keys(fighters);
 
 function placeFighter(strength, lightSideDarkSide) {
 	var currentFighter;
-for (let i = 0; i < fighterNames.length; i++)
-{
-	if (fighters[fighterNames[i]].rank === strength && fighters[fighterNames[i]].side === lightSideDarkSide) {currentFighter = fighters[fighterNames[i]]; currentFighter.name = fighterNames[i]; break;}
-}
+	for (let i = 0; i < fighterNames.length; i++) {
+		if (fighters[fighterNames[i]].rank === strength && fighters[fighterNames[i]].side === lightSideDarkSide) {currentFighter = fighters[fighterNames[i]]; currentFighter.name = fighterNames[i]; break;}
+	}
 	if (currentFighter) { 
 		imageFighter = $("<img>");
 		imageFighter.addClass("fighter-image");
@@ -79,13 +77,7 @@ for (let i = 0; i < fighterNames.length; i++)
 	}	
 }
 
-var gameOver = false;
-placeFighter(roundCounter, "jedi"); 
-
-textElements.notificationText.textContent = "Your turn. Click End Turn because your fighters can't attack or use abilities on the same turn they enter play."
-
 function nextTurn() { // add parameter: side, to be used in the various functions for each phase
-
 	
 	for (i = 0; i < fighterNames.length; i++) {
 		if (fighters[fighterNames[i]].inPlay) 
@@ -302,12 +294,7 @@ function clickListener(event) {
 	}
 }
 
-//need blocking functions
-// need the ability to select only a single fighter at a time when attempting to use ability, including which fighter or player to target with ability, if there is a target of the ability. and a final confirm use ability button.
-// need explanatory messages like "you can't attack with that fighter yet, he hasn't been out a full round yet. or, that fighter has no abilities. or, you can't block with that fighter, he attacked or used an ability during your last turn.
-//these are simplified MtG mechanics. you can only use fighter abilities during your own turn, and it always causes the fighter to become unready or "tapped" just as though he had attacked.
-//perhaps a gray overlay of fighter image for those who just came out that turn, to be removed as soon as the turn is over?
-//ultimately, it would be nice to develop a visual library to simplify some of the operations I am performing here.
-//there is definitely room for more functional encapsulation
+placeFighter(roundCounter, "jedi"); 
+textElements.notificationText.textContent = "Your turn. Click End Turn because your fighters can't attack or use abilities on the same turn they enter play."
 
 document.addEventListener('click', clickListener);
