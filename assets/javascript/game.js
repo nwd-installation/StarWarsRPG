@@ -44,16 +44,16 @@ var sendButtonClicked = false;
 
 const fighters = {
 	
-	"Obi-Wan Kenobi": {rank:1,side:"jedi",inPlay:false,tapped:false, imagePath:"./assets/images/ObiWanKenobi.jpg", ability:1},
-	"Qui-Gon Jinn": {rank:2,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/QuiGonJinn.jpg", ability:0},
-	"Mace Windu": {rank:3,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/MaceWindu.jpg", ability:0},
-	"Yoda": {rank:4,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/Yoda.jpg", ability:0},
-	"Anakin Skywalker": {rank:5,side:"jedi",inPlay:false,tapped:false,imagePath:"./assets/images/Anakin.jpg", ability:0},
-	"Darth Maul": {rank:1,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthMaul.jpeg", ability:0},
-	"Darth Plagueis": {rank:2,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthPlagueis.jpg", ability:0},
-	"Chancellor Palpatine": {rank:3,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/Palpatine.jpg", ability:0},
-	"Darth Vader": {rank:4,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthVader.jpg", ability:0},
-	"Darth Sidious": {rank:5,side:"sith",inPlay:false,tapped:false,imagePath:"./assets/images/DarthSidious.jpeg", ability:0}
+	"Obi-Wan Kenobi"		: {rank:1,side:"jedi",inPlay:false,tapped:false,ability:1,imagePath:"./assets/images/ObiWanKenobi.jpg"}
+	"Qui-Gon Jinn"			: {rank:2,side:"jedi",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/QuiGonJinn.jpg"}
+	"Mace Windu"			: {rank:3,side:"jedi",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/MaceWindu.jpg"}
+	"Yoda"					: {rank:4,side:"jedi",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/Yoda.jpg"}
+	"Anakin Skywalker"		: {rank:5,side:"jedi",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/Anakin.jpg"}
+	"Darth Maul"			: {rank:1,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthMaul.jpeg"}
+	"Darth Plagueis"		: {rank:2,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthPlagueis.jpg"}
+	"Chancellor Palpatine"	: {rank:3,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/Palpatine.jpg"}
+	"Darth Vader"			: {rank:4,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthVader.jpg"}
+	"Darth Sidious"			: {rank:5,side:"sith",inPlay:false,tapped:false,ability:0,imagePath:"./assets/images/DarthSidious.jpeg"}
 };
 const fighterNames = Object.keys(fighters);
 
