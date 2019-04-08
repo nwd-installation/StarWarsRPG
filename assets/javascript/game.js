@@ -137,31 +137,7 @@ function tapFighter(fname) {
 	fighters[fname].tapped = true;
 }
 
-function nextTurn() { // add parameter: side, to be used in the various functions for each phase
-	unselectFighters("jedi");
-	unhighlightFighters("jedi");
-	untapFighters("sith");
-	
-	if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) { // summon opposing fighter
-		textElements.notificationText.textContent = "Summoning fighter";
-		placeFighter(roundCounter, "sith");
-	}
-	// opponent will attack if able, or use abilities, before next jedi is placed
-	// need to indicate on screen what phase it is
-	
-	if (roundCounter > 1) { // opponent attack phase
-		var attacking = identifyAbleToAttack("sith");
-		var attackval = countAttackPoints(attacking);
-		textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
-		
-		attacking.forEach(tapFighter);
-		
-		playerLife -= attackval; textElements.playerHPText.textContent = playerLife;
-		if (playerLife < 1) { textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
-	}
-	
-	//next section: restorebuttons
-	
+function restoreButtons() {
 	targetDiv = document.getElementById("next-turn");
 	if (targetDiv !== null) targetDiv.classList.replace("pressed-button","control-button2"); 
 	attackButtonClicked = false;
@@ -176,12 +152,55 @@ function nextTurn() { // add parameter: side, to be used in the various function
 		targetDiv.classList.replace("pressed-button","control-button");
 		if (!targetDiv.classList.contains("invisible")) targetDiv.classList.add("invisible");
 	}
+}
+
+function opponentSummonFighter() {
+	if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) { // summon opposing fighter
+		textElements.notificationText.textContent = "Summoning fighter";
+		placeFighter(roundCounter, "sith");
+	}
+}
+
+function opponentAttack() {
+		
+	// opponent will attack if able, or use abilities, before next jedi is placed
+	// need to indicate on screen what phase it is
+	
+	if (roundCounter > 1) { // opponent attack phase
+		var attacking = identifyAbleToAttack("sith");
+		var attackval = countAttackPoints(attacking);
+		textElements.notificationText.textContent = "Opponent is attacking with: " + attacking + " for a total of " + attackval + " attack points. Select fighter(s) to block."
+		
+		attacking.forEach(tapFighter);
+		
+		playerLife -= attackval; textElements.playerHPText.textContent = playerLife;
+		if (playerLife < 1) { textElements.notificationText.textContent = "You lose! Game Over"; gameOver = true;}
+	}
+}
+
+function opponentTurn() {
+	
+	untapFighters("sith");
+	
+	opponentSummonFighter(); // don't hardcode side
+	
+	opponentAttack(); // opponentAttack("sith");
+}
+	
+function nextTurn() { // add parameter: side, to be used in the various functions for each phase
+	unselectFighters("jedi");
+	unhighlightFighters("jedi");
+	
+	opponentTurn();
+	
+	restoreButtons();
+
 	if (!gameOver){
 		textElements.notificationText.textContent = "Your Turn.";
 		currentSideTurn = "jedi";
 		textElements.turnTrackerText.textContent = currentSideTurn;
 		untapFighters("jedi");
-		if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) {
+		if (fighterNames.filter(x => !fighters[x].inPlay && fighters[x].side === "sith").length > 0) { // use summon fighter here
 			textElements.notificationText.textContent = "Summoning fighter";
 			placeFighter(++roundCounter, "jedi");
 			textElements.roundTrackerText.textContent = roundCounter;
