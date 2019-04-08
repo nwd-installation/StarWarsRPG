@@ -20,6 +20,11 @@
 // function selectFighterByElement() {} // function takes in an element of a fighter and "selects it" by adjusting its margins to move it down and right
 // function selectFighterByName() {} // function takes in an name of a fighter and selects it" by adjusting its margins to move it down and right
 
+// global variables stored in game object?
+
+// remove jquery because only one call is being used.
+
+
 var attackCadre = [];
 var forceUser = {};
 var targetedAbility = 0;
