@@ -53,24 +53,17 @@ body {
 	width: 150px;
 }
 
-#next-turn {
-	background-color: orange;
+.pressed-button {
+	background-color: gray;
+	border-width: 2px;
 }
 
 .invisible {
 	display: none;
 }
 
-.pressed-button {
-	background-color: gray;
-	text-align:center;
-	border: 2px;
-	border-color: white;
-	border-style: solid;
-	margin: 1em 1em;
-	color: white;
-	font-weight: bold;
-	width: 150px;
+#next-turn {
+	background-color: orange;
 }
 
 .highlighted-fighter {
